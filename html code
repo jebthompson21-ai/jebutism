@@ -1,0 +1,2313 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+<title>GRIDIRON IQ · College Football Trivia</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Bebas+Neue&family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&family=Bungee&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0a0a0c;
+  --bg-2: #131316;
+  --bg-3: #1c1c20;
+  --panel: #16161a;
+  --border: #28282e;
+  --border-2: #34343c;
+  --text: #f4f1ea;
+  --text-2: #b0aca3;
+  --text-3: #6e6a62;
+
+–scarlet: #BB0000;
+–scarlet-hot: #ff1f1f;
+–gray: #666666;
+–bone: #F5F0E1;
+–gold: #f0b738;
+–green: #2ecc71;
+–red-neg: #ff4d4d;
+
+–maize: #FFCB05;
+–blue: #00274C;
+
+–display: ‘Anton’, ‘Bebas Neue’, sans-serif;
+–subhead: ‘Bebas Neue’, sans-serif;
+–body: ‘Manrope’, system-ui, sans-serif;
+–mono: ‘JetBrains Mono’, monospace;
+–decal: ‘Bungee’, sans-serif;
+
+–r-sm: 6px;
+–r: 10px;
+–r-lg: 16px;
+–shadow: 0 4px 14px rgba(0,0,0,.4), 0 1px 0 rgba(255,255,255,.04) inset;
+–shadow-lg: 0 14px 40px rgba(0,0,0,.55), 0 1px 0 rgba(255,255,255,.06) inset;
+}
+
+- { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+  background:
+  radial-gradient(1100px 600px at 80% -10%, rgba(187,0,0,.08), transparent 60%),
+  radial-gradient(900px 500px at 0% 110%, rgba(187,0,0,.04), transparent 60%),
+  var(–bg);
+  color: var(–text);
+  font-family: var(–body);
+  font-size: 14px;
+  line-height: 1.5;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  }
+  body::before {
+  content: “”;
+  position: fixed; inset: 0;
+  background-image:
+  repeating-linear-gradient(
+  90deg,
+  transparent 0 80px,
+  rgba(255,255,255,.012) 80px 81px
+  );
+  pointer-events: none;
+  z-index: 0;
+  }
+  .app { position: relative; z-index: 1; }
+
+/* ===== TOPBAR ===== */
+.topbar {
+display: flex; align-items: center; justify-content: space-between;
+padding: 14px 20px;
+border-bottom: 1px solid var(–border);
+background: linear-gradient(180deg, rgba(0,0,0,.5), rgba(0,0,0,.15));
+position: sticky; top: 0; z-index: 50;
+backdrop-filter: blur(18px);
+}
+.brand {
+display: flex; align-items: center; gap: 14px;
+}
+.brand-mark {
+width: 38px; height: 38px;
+display: grid; place-items: center;
+background: var(–scarlet);
+border-radius: 6px;
+font-family: var(–decal);
+font-size: 18px;
+color: #fff;
+letter-spacing: .5px;
+box-shadow: 0 6px 16px rgba(187,0,0,.4), 0 1px 0 rgba(255,255,255,.2) inset;
+transform: rotate(-3deg);
+}
+.brand-name {
+font-family: var(–display);
+font-size: 26px;
+letter-spacing: 2.5px;
+line-height: 1;
+}
+.brand-sub {
+font-family: var(–mono);
+font-size: 10px;
+color: var(–text-3);
+letter-spacing: 2px;
+text-transform: uppercase;
+}
+.score-pill {
+display: flex; align-items: center; gap: 12px;
+padding: 8px 14px;
+background: var(–bg-2);
+border: 1px solid var(–border);
+border-radius: 999px;
+font-family: var(–mono);
+font-size: 12px;
+}
+.score-pill .lbl { color: var(–text-3); text-transform: uppercase; letter-spacing: 1.5px; font-size: 10px; }
+.score-pill .val { color: var(–scarlet-hot); font-weight: 700; font-size: 14px; }
+
+/* ===== TABS ===== */
+.tabs {
+display: flex;
+gap: 4px;
+padding: 8px 16px 0;
+border-bottom: 1px solid var(–border);
+background: var(–bg-2);
+overflow-x: auto;
+scrollbar-width: none;
+position: sticky; top: 67px; z-index: 49;
+}
+.tabs::-webkit-scrollbar { display: none; }
+.tab {
+flex-shrink: 0;
+padding: 12px 18px;
+font-family: var(–subhead);
+font-size: 14px;
+letter-spacing: 1.8px;
+text-transform: uppercase;
+color: var(–text-3);
+border-bottom: 2px solid transparent;
+cursor: pointer;
+user-select: none;
+transition: color .15s, border-color .15s;
+}
+.tab:hover { color: var(–text-2); }
+.tab.active { color: var(–text); border-bottom-color: var(–scarlet); }
+.tab .badge {
+display: inline-block;
+margin-left: 6px;
+background: var(–scarlet);
+color: #fff;
+font-family: var(–mono);
+font-size: 9px;
+padding: 2px 6px;
+border-radius: 999px;
+letter-spacing: .5px;
+vertical-align: top;
+margin-top: 2px;
+}
+
+/* ===== PANELS ===== */
+.panel { display: none; padding: 22px 20px 40px; max-width: 1280px; margin: 0 auto; }
+.panel.active { display: block; }
+
+.section-h {
+display: flex; align-items: baseline; justify-content: space-between;
+margin-bottom: 16px;
+}
+.section-h h2 {
+font-family: var(–display);
+font-size: 32px;
+letter-spacing: 2px;
+margin: 0;
+}
+.section-h .sub {
+font-family: var(–mono);
+font-size: 11px;
+color: var(–text-3);
+text-transform: uppercase;
+letter-spacing: 1.5px;
+}
+
+/* ===== HOME / HUB ===== */
+.hero {
+position: relative;
+padding: 36px 24px 32px;
+background:
+linear-gradient(135deg, rgba(187,0,0,.18), rgba(187,0,0,0) 60%),
+var(–panel);
+border: 1px solid var(–border);
+border-radius: var(–r-lg);
+overflow: hidden;
+margin-bottom: 24px;
+}
+.hero::before {
+content: “”; position: absolute; top: 0; right: 0;
+width: 280px; height: 100%;
+background: repeating-linear-gradient(
+-10deg,
+transparent 0 14px,
+rgba(187,0,0,.08) 14px 18px
+);
+pointer-events: none;
+}
+.hero h1 {
+font-family: var(–display);
+font-size: 56px;
+line-height: 0.95;
+letter-spacing: 1.5px;
+margin: 0 0 8px;
+text-transform: uppercase;
+}
+.hero h1 .accent { color: var(–scarlet-hot); }
+.hero p {
+max-width: 540px;
+color: var(–text-2);
+margin: 0 0 18px;
+font-size: 15px;
+}
+.hero-cta {
+display: flex; flex-wrap: wrap; gap: 10px;
+}
+.hero-stats {
+display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+gap: 14px;
+margin-top: 22px;
+padding-top: 22px;
+border-top: 1px dashed var(–border-2);
+}
+.hero-stat .lbl { font-family: var(–mono); font-size: 10px; color: var(–text-3); letter-spacing: 1.5px; text-transform: uppercase; }
+.hero-stat .val { font-family: var(–display); font-size: 32px; line-height: 1; }
+.hero-stat .val .accent { color: var(–scarlet-hot); }
+
+.mode-grid {
+display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+gap: 14px;
+}
+.mode-card {
+position: relative;
+padding: 20px;
+background: var(–panel);
+border: 1px solid var(–border);
+border-radius: var(–r);
+cursor: pointer;
+transition: transform .15s, border-color .15s, background .15s;
+overflow: hidden;
+}
+.mode-card:hover { transform: translateY(-2px); border-color: var(–scarlet); background: linear-gradient(180deg, rgba(187,0,0,.06), transparent 60%), var(–panel); }
+.mode-card .num {
+font-family: var(–decal);
+font-size: 12px;
+color: var(–scarlet-hot);
+letter-spacing: 1.5px;
+margin-bottom: 8px;
+}
+.mode-card h3 {
+font-family: var(–display);
+font-size: 22px;
+letter-spacing: 1.5px;
+margin: 0 0 6px;
+text-transform: uppercase;
+}
+.mode-card p { color: var(–text-2); margin: 0 0 14px; font-size: 13px; min-height: 38px; }
+.mode-card .meta { font-family: var(–mono); font-size: 10px; color: var(–text-3); letter-spacing: 1.5px; text-transform: uppercase; }
+
+/* ===== FORM CONTROLS ===== */
+.btn {
+display: inline-flex; align-items: center; gap: 8px;
+padding: 11px 18px;
+background: var(–scarlet);
+color: #fff;
+border: none;
+border-radius: 6px;
+font-family: var(–subhead);
+font-size: 13px;
+letter-spacing: 2px;
+text-transform: uppercase;
+cursor: pointer;
+transition: filter .15s, transform .1s;
+box-shadow: 0 4px 12px rgba(187,0,0,.35);
+}
+.btn:hover { filter: brightness(1.1); }
+.btn:active { transform: translateY(1px); }
+.btn.ghost { background: transparent; border: 1px solid var(–border-2); color: var(–text); box-shadow: none; }
+.btn.ghost:hover { border-color: var(–scarlet); color: var(–scarlet-hot); }
+.btn.sm { padding: 7px 12px; font-size: 11px; letter-spacing: 1.5px; }
+.btn.lg { padding: 14px 24px; font-size: 15px; }
+.btn.gold { background: var(–gold); color: #0a0a0c; box-shadow: 0 4px 12px rgba(240,183,56,.3); }
+
+.input, .select {
+background: var(–bg-3);
+border: 1px solid var(–border);
+color: var(–text);
+padding: 10px 12px;
+border-radius: 6px;
+font-family: var(–mono);
+font-size: 13px;
+outline: none;
+}
+.input:focus, .select:focus { border-color: var(–scarlet); }
+.input.lg { font-size: 18px; padding: 14px 16px; }
+.field {
+display: flex; flex-direction: column; gap: 6px;
+}
+.field .lbl { font-family: var(–mono); font-size: 10px; color: var(–text-3); letter-spacing: 1.5px; text-transform: uppercase; }
+
+/* ===== QUIZ UI ===== */
+.quiz-wrap {
+display: grid;
+grid-template-columns: 1fr;
+gap: 20px;
+}
+.quiz-controls {
+display: flex; flex-wrap: wrap; gap: 10px; align-items: end;
+padding: 16px;
+background: var(–panel);
+border: 1px solid var(–border);
+border-radius: var(–r);
+}
+.quiz-stage {
+position: relative;
+background:
+radial-gradient(700px 350px at 50% 0%, rgba(187,0,0,.07), transparent 70%),
+var(–panel);
+border: 1px solid var(–border);
+border-radius: var(–r-lg);
+padding: 26px;
+min-height: 420px;
+}
+.quiz-progress {
+display: flex; align-items: center; justify-content: space-between;
+margin-bottom: 16px;
+font-family: var(–mono);
+font-size: 11px;
+color: var(–text-3);
+letter-spacing: 1.5px;
+text-transform: uppercase;
+}
+.quiz-progress .timer { color: var(–scarlet-hot); font-weight: 700; }
+.progress-bar { height: 4px; background: var(–bg-3); border-radius: 999px; overflow: hidden; margin-bottom: 22px; }
+.progress-bar .fill { height: 100%; background: linear-gradient(90deg, var(–scarlet), var(–scarlet-hot)); transition: width .25s; }
+
+.helmet-card {
+display: grid; place-items: center;
+background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(0,0,0,.4));
+border: 1px solid var(–border-2);
+border-radius: var(–r-lg);
+padding: 30px;
+margin-bottom: 22px;
+position: relative;
+overflow: hidden;
+}
+.helmet-card::before {
+content: “”;
+position: absolute;
+inset: auto 0 0 0;
+height: 12px;
+background: repeating-linear-gradient(90deg, var(–bone) 0 18px, transparent 18px 26px);
+opacity: .15;
+}
+.helmet-card img {
+max-width: 220px; max-height: 220px;
+filter: drop-shadow(0 12px 22px rgba(0,0,0,.6));
+}
+.helmet-card .ph {
+width: 220px; height: 220px;
+display: grid; place-items: center;
+font-family: var(–display);
+font-size: 40px;
+color: var(–text-3);
+letter-spacing: 2px;
+border: 2px dashed var(–border-2);
+border-radius: 50%;
+}
+
+.q-prompt {
+font-family: var(–display);
+font-size: 26px;
+text-align: center;
+letter-spacing: 1.5px;
+margin: 0 0 18px;
+}
+.q-prompt .accent { color: var(–scarlet-hot); }
+
+.choices {
+display: grid;
+grid-template-columns: repeat(2, 1fr);
+gap: 10px;
+}
+.choice {
+padding: 14px 16px;
+background: var(–bg-3);
+border: 1px solid var(–border-2);
+border-radius: var(–r);
+cursor: pointer;
+text-align: left;
+font-family: var(–body);
+font-size: 14px;
+color: var(–text);
+transition: all .15s;
+position: relative;
+user-select: none;
+}
+.choice:hover { border-color: var(–scarlet); background: linear-gradient(180deg, rgba(187,0,0,.05), transparent), var(–bg-3); }
+.choice .letter {
+display: inline-block;
+width: 22px;
+font-family: var(–decal);
+color: var(–scarlet-hot);
+font-size: 14px;
+}
+.choice.correct {
+background: linear-gradient(180deg, rgba(46,204,113,.18), transparent), var(–bg-3);
+border-color: var(–green);
+color: var(–green);
+}
+.choice.wrong {
+background: linear-gradient(180deg, rgba(255,77,77,.18), transparent), var(–bg-3);
+border-color: var(–red-neg);
+color: var(–red-neg);
+}
+.choice:disabled { cursor: default; }
+
+.fill-input {
+width: 100%;
+background: var(–bg-3);
+border: 2px solid var(–border-2);
+border-radius: var(–r);
+padding: 18px 20px;
+font-family: var(–display);
+font-size: 28px;
+letter-spacing: 2px;
+color: var(–text);
+outline: none;
+text-transform: uppercase;
+text-align: center;
+}
+.fill-input:focus { border-color: var(–scarlet); }
+.fill-input.correct { border-color: var(–green); color: var(–green); }
+.fill-input.wrong { border-color: var(–red-neg); color: var(–red-neg); }
+
+.q-feedback {
+margin-top: 16px;
+padding: 14px;
+background: var(–bg-3);
+border-radius: var(–r);
+font-size: 13px;
+text-align: center;
+display: none;
+}
+.q-feedback.active { display: block; }
+.q-feedback.win { color: var(–green); border: 1px solid rgba(46,204,113,.3); }
+.q-feedback.lose { color: var(–red-neg); border: 1px solid rgba(255,77,77,.3); }
+.q-feedback .answer { display: block; margin-top: 4px; color: var(–text); font-family: var(–display); font-size: 18px; letter-spacing: 1.5px; }
+
+.q-actions {
+display: flex; gap: 10px; justify-content: center; margin-top: 22px;
+}
+
+/* ===== RESULT SCREEN ===== */
+.result {
+text-align: center;
+padding: 30px 20px;
+}
+.result .score {
+font-family: var(–display);
+font-size: 96px;
+line-height: 1;
+margin: 12px 0;
+}
+.result .score .accent { color: var(–scarlet-hot); }
+.result .pct { font-family: var(–mono); font-size: 16px; color: var(–text-2); }
+.result .grade {
+display: inline-block;
+margin-top: 14px;
+padding: 6px 16px;
+background: var(–scarlet);
+color: #fff;
+font-family: var(–decal);
+font-size: 16px;
+border-radius: 999px;
+letter-spacing: 1.5px;
+}
+.result-detail {
+margin-top: 26px;
+display: grid;
+grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+gap: 12px;
+text-align: left;
+}
+.result-detail .stat {
+padding: 14px;
+background: var(–bg-3);
+border: 1px solid var(–border);
+border-radius: var(–r);
+}
+.result-detail .stat .lbl { font-family: var(–mono); font-size: 10px; color: var(–text-3); letter-spacing: 1.5px; text-transform: uppercase; }
+.result-detail .stat .val { font-family: var(–display); font-size: 24px; }
+
+/* ===== TEAM SPOTLIGHT (Ohio State) ===== */
+.osu-mode { background: linear-gradient(180deg, rgba(187,0,0,.05), transparent 30%), var(–bg); }
+
+.spotlight-hero {
+position: relative;
+padding: 40px 28px;
+background:
+radial-gradient(800px 400px at 100% 0%, rgba(187,0,0,.35), transparent 60%),
+linear-gradient(180deg, #1a0707, #0d0202);
+border: 1px solid rgba(187,0,0,.4);
+border-radius: var(–r-lg);
+margin-bottom: 24px;
+overflow: hidden;
+}
+.spotlight-hero::after {
+content: “OHIO”;
+position: absolute;
+right: -20px; bottom: -40px;
+font-family: var(–display);
+font-size: 220px;
+letter-spacing: 8px;
+color: rgba(187,0,0,.08);
+pointer-events: none;
+line-height: 1;
+}
+.spotlight-hero h1 {
+font-family: var(–display);
+font-size: 64px;
+letter-spacing: 3px;
+margin: 0;
+line-height: .95;
+}
+.spotlight-hero h1 span { display: block; color: var(–scarlet-hot); font-size: 80px; }
+.spotlight-hero .meta {
+margin-top: 14px;
+font-family: var(–mono);
+font-size: 12px;
+color: var(–text-2);
+letter-spacing: 1.5px;
+}
+.spotlight-hero .stats-row {
+display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+gap: 18px;
+margin-top: 24px;
+padding-top: 24px;
+border-top: 1px dashed rgba(187,0,0,.4);
+position: relative; z-index: 1;
+}
+.spotlight-hero .stat .lbl { font-family: var(–mono); font-size: 10px; color: rgba(245,240,225,.5); letter-spacing: 1.5px; text-transform: uppercase; }
+.spotlight-hero .stat .val { font-family: var(–display); font-size: 36px; line-height: 1; }
+
+.spotlight-grid {
+display: grid;
+grid-template-columns: 1fr 1fr;
+gap: 16px;
+}
+@media (max-width: 720px) { .spotlight-grid { grid-template-columns: 1fr; } }
+
+.fact-card {
+padding: 18px 20px;
+background: var(–panel);
+border: 1px solid var(–border);
+border-radius: var(–r);
+}
+.fact-card h3 {
+font-family: var(–display);
+font-size: 18px;
+letter-spacing: 1.5px;
+margin: 0 0 12px;
+color: var(–scarlet-hot);
+text-transform: uppercase;
+}
+.fact-card ul { margin: 0; padding-left: 18px; color: var(–text-2); }
+.fact-card ul li { margin-bottom: 6px; }
+.fact-card ul li strong { color: var(–text); }
+.fact-card.full { grid-column: 1 / -1; }
+
+.qmark-list {
+list-style: none;
+padding: 0;
+margin: 0;
+}
+.qmark-list li {
+padding: 10px 0;
+border-bottom: 1px dashed var(–border);
+display: flex;
+gap: 12px;
+}
+.qmark-list li:last-child { border-bottom: none; }
+.qmark-list .q {
+font-family: var(–mono);
+font-size: 11px;
+color: var(–scarlet-hot);
+flex-shrink: 0;
+min-width: 28px;
+}
+.qmark-list .a {
+color: var(–text-2);
+font-size: 13px;
+}
+.qmark-list .a strong { color: var(–text); }
+
+/* ===== MICHIGAN HATE TAB ===== */
+.michigan-mode {
+position: relative;
+padding: 30px 24px;
+background:
+repeating-linear-gradient(45deg, transparent 0 12px, rgba(255,203,5,.025) 12px 13px),
+linear-gradient(180deg, #0a0a14, #0a0a0c);
+border: 1px solid var(–border);
+border-radius: var(–r-lg);
+margin-bottom: 24px;
+overflow: hidden;
+}
+.michigan-mode::before {
+content: “TTUN”;
+position: absolute;
+top: 20px; right: 30px;
+font-family: var(–display);
+font-size: 180px;
+color: rgba(255,203,5,.06);
+letter-spacing: 6px;
+line-height: 1;
+pointer-events: none;
+text-decoration: line-through;
+text-decoration-color: var(–scarlet);
+text-decoration-thickness: 12px;
+}
+.michigan-mode h1 {
+font-family: var(–display);
+font-size: 56px;
+letter-spacing: 2px;
+margin: 0 0 4px;
+position: relative;
+}
+.michigan-mode h1 .strike {
+text-decoration: line-through;
+text-decoration-color: var(–scarlet);
+text-decoration-thickness: 6px;
+color: var(–text-3);
+}
+.michigan-mode .tagline {
+font-family: var(–mono);
+font-size: 12px;
+color: var(–text-2);
+letter-spacing: 1.5px;
+position: relative;
+margin-bottom: 22px;
+}
+.michigan-mode .tagline .red { color: var(–scarlet-hot); }
+
+.rivalry-grid {
+display: grid; grid-template-columns: 1fr 1fr;
+gap: 14px;
+position: relative;
+}
+@media (max-width: 720px) { .rivalry-grid { grid-template-columns: 1fr; } }
+
+.rivalry-card {
+padding: 16px 18px;
+background: rgba(15,15,18,.85);
+border: 1px solid var(–border);
+border-left: 3px solid var(–scarlet);
+border-radius: 6px;
+}
+.rivalry-card h3 {
+font-family: var(–display);
+font-size: 18px;
+letter-spacing: 1.5px;
+margin: 0 0 8px;
+color: var(–scarlet-hot);
+text-transform: uppercase;
+}
+.rivalry-card p { color: var(–text-2); margin: 6px 0; font-size: 13px; }
+.rivalry-card .quote {
+display: block;
+font-style: italic;
+color: var(–bone);
+font-size: 15px;
+padding: 10px 14px;
+border-left: 2px solid var(–gold);
+margin: 10px 0;
+}
+.rivalry-card .quote .src { display: block; margin-top: 6px; font-style: normal; font-family: var(–mono); font-size: 10px; color: var(–text-3); letter-spacing: 1px; }
+
+.scoreboard {
+background: #050505;
+border: 1px solid var(–border-2);
+border-radius: var(–r);
+padding: 18px 22px;
+display: grid;
+grid-template-columns: 1fr auto 1fr;
+align-items: center;
+gap: 18px;
+position: relative;
+margin: 14px 0;
+}
+.scoreboard .team { text-align: center; }
+.scoreboard .team .name {
+font-family: var(–display);
+font-size: 22px;
+letter-spacing: 1.5px;
+}
+.scoreboard .team.osu .name { color: var(–scarlet-hot); }
+.scoreboard .team.mich .name { color: var(–maize); opacity: .55; }
+.scoreboard .team .wins {
+font-family: var(–decal);
+font-size: 60px;
+color: var(–text);
+line-height: 1;
+}
+.scoreboard .team.mich .wins { opacity: .5; }
+.scoreboard .vs {
+font-family: var(–mono);
+font-size: 11px;
+color: var(–text-3);
+letter-spacing: 1.5px;
+text-align: center;
+}
+.scoreboard .vs .meta { display: block; margin-top: 4px; color: var(–scarlet-hot); }
+
+.countdown {
+display: flex; gap: 8px; justify-content: center;
+margin: 18px 0 6px;
+}
+.countdown .unit {
+background: #050505;
+border: 1px solid var(–border-2);
+border-radius: 6px;
+padding: 12px 14px;
+min-width: 70px;
+text-align: center;
+}
+.countdown .unit .n {
+font-family: var(–decal);
+font-size: 32px;
+color: var(–scarlet-hot);
+line-height: 1;
+}
+.countdown .unit .l {
+font-family: var(–mono);
+font-size: 9px;
+color: var(–text-3);
+letter-spacing: 1.5px;
+text-transform: uppercase;
+}
+
+.chant-banner {
+text-align: center;
+padding: 20px 18px;
+margin: 22px 0;
+background:
+repeating-linear-gradient(0deg, transparent 0 18px, rgba(187,0,0,.06) 18px 19px),
+linear-gradient(90deg, rgba(187,0,0,.12), rgba(187,0,0,.04));
+border: 1px dashed rgba(187,0,0,.5);
+border-radius: var(–r);
+}
+.chant-banner .chant {
+font-family: var(–display);
+font-size: 36px;
+letter-spacing: 6px;
+color: var(–scarlet-hot);
+margin: 0;
+}
+.chant-banner .sub {
+font-family: var(–mono);
+font-size: 11px;
+color: var(–text-2);
+letter-spacing: 1.5px;
+margin-top: 6px;
+}
+
+/* ===== DAILY GRID ===== */
+.daily-grid-wrap {
+background: var(–panel);
+border: 1px solid var(–border);
+border-radius: var(–r-lg);
+padding: 20px;
+max-width: 580px;
+margin: 0 auto;
+}
+.daily-grid {
+display: grid;
+grid-template-columns: 100px repeat(3, 1fr);
+grid-template-rows: 60px repeat(3, 1fr);
+gap: 6px;
+}
+.daily-grid .corner { }
+.daily-grid .col-h, .daily-grid .row-h {
+display: flex; align-items: center; justify-content: center;
+background: var(–bg-3);
+border: 1px solid var(–border);
+border-radius: 4px;
+padding: 6px;
+font-family: var(–mono);
+font-size: 10px;
+text-align: center;
+text-transform: uppercase;
+letter-spacing: 1px;
+color: var(–text-2);
+}
+.daily-grid .cell {
+position: relative;
+background: var(–bg-3);
+border: 1px solid var(–border);
+border-radius: 4px;
+cursor: pointer;
+display: grid; place-items: center;
+min-height: 90px;
+transition: all .15s;
+}
+.daily-grid .cell:hover { border-color: var(–scarlet); }
+.daily-grid .cell.filled {
+background: linear-gradient(180deg, rgba(46,204,113,.15), transparent), var(–bg-3);
+border-color: var(–green);
+}
+.daily-grid .cell.filled .name {
+font-family: var(–display);
+font-size: 14px;
+text-align: center;
+color: var(–text);
+letter-spacing: 1px;
+}
+.daily-grid .cell .plus { font-family: var(–display); font-size: 32px; color: var(–text-3); }
+
+/* ===== UTILS ===== */
+.row { display: flex; align-items: center; }
+.row.between { justify-content: space-between; }
+.row.gap-8 { gap: 8px; }
+.row.gap-12 { gap: 12px; }
+.row.wrap { flex-wrap: wrap; }
+.muted { color: var(–text-3); }
+.empty {
+padding: 50px 20px;
+text-align: center;
+color: var(–text-3);
+font-family: var(–mono);
+font-size: 13px;
+letter-spacing: 1.5px;
+}
+.empty .big {
+display: block;
+font-family: var(–display);
+font-size: 28px;
+letter-spacing: 2px;
+color: var(–text-2);
+margin-bottom: 8px;
+}
+.spinner {
+width: 32px; height: 32px;
+border: 3px solid var(–border-2);
+border-top-color: var(–scarlet);
+border-radius: 50%;
+animation: spin 1s linear infinite;
+margin: 24px auto;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+.chip {
+display: inline-block;
+padding: 3px 10px;
+background: var(–bg-3);
+border: 1px solid var(–border);
+border-radius: 999px;
+font-family: var(–mono);
+font-size: 10px;
+color: var(–text-2);
+letter-spacing: 1px;
+text-transform: uppercase;
+}
+.chip.scarlet { background: rgba(187,0,0,.15); border-color: var(–scarlet); color: var(–scarlet-hot); }
+
+/* ===== MOBILE ===== */
+@media (max-width: 600px) {
+.topbar { padding: 10px 14px; }
+.brand-name { font-size: 22px; }
+.panel { padding: 16px 14px 30px; }
+.hero { padding: 24px 18px; }
+.hero h1 { font-size: 42px; }
+.section-h h2 { font-size: 26px; }
+.quiz-stage { padding: 18px; }
+.helmet-card img, .helmet-card .ph { max-width: 170px; max-height: 170px; width: 170px; height: 170px; font-size: 32px; }
+.q-prompt { font-size: 22px; }
+.choices { grid-template-columns: 1fr; }
+.fill-input { font-size: 22px; padding: 14px 16px; }
+.spotlight-hero h1 { font-size: 44px; }
+.spotlight-hero h1 span { font-size: 56px; }
+.spotlight-hero::after { font-size: 130px; }
+.michigan-mode h1 { font-size: 36px; }
+.michigan-mode::before { font-size: 100px; }
+.scoreboard .team .wins { font-size: 44px; }
+.chant-banner .chant { font-size: 24px; letter-spacing: 4px; }
+.daily-grid { grid-template-columns: 60px repeat(3, 1fr); grid-template-rows: 40px repeat(3, 1fr); }
+}
+</style>
+
+</head>
+<body>
+<div class="app">
+
+<!-- TOP BAR -->
+
+<header class="topbar">
+  <div class="brand">
+    <div class="brand-mark">G</div>
+    <div>
+      <div class="brand-name">GRIDIRON IQ</div>
+      <div class="brand-sub">College Football Trivia · FBS &amp; FCS</div>
+    </div>
+  </div>
+  <div class="row gap-12">
+    <div class="score-pill">
+      <span class="lbl">Streak</span>
+      <span class="val" id="streakVal">0</span>
+    </div>
+    <div class="score-pill">
+      <span class="lbl">Total</span>
+      <span class="val" id="totalVal">0</span>
+    </div>
+  </div>
+</header>
+
+<!-- TABS -->
+
+<nav class="tabs" id="tabs">
+  <div class="tab active" data-tab="home">HOME</div>
+  <div class="tab" data-tab="helmet">HELMET QUIZ</div>
+  <div class="tab" data-tab="fill">THE ___</div>
+  <div class="tab" data-tab="conference">CONFERENCE</div>
+  <div class="tab" data-tab="location">LOCATION</div>
+  <div class="tab" data-tab="grid">DAILY GRID</div>
+  <div class="tab" data-tab="custom">CUSTOM</div>
+  <div class="tab" data-tab="osu">OHIO STATE</div>
+  <div class="tab" data-tab="michigan">BEAT MICHIGAN</div>
+</nav>
+
+<!-- HOME -->
+
+<section class="panel active" id="panel-home">
+  <div class="hero">
+    <h1>KNOW YOUR<br><span class="accent">PROGRAM.</span></h1>
+    <p>Quizzes for every FBS and FCS school — helmets, mascots, conferences, locations, and the kind of fill-in-the-blank stuff your dad still argues about. Built for the obsessed.</p>
+    <div class="hero-cta">
+      <button class="btn lg" onclick="goTab('helmet')">START HELMET QUIZ</button>
+      <button class="btn ghost lg" onclick="goTab('grid')">DAILY GRID</button>
+    </div>
+    <div class="hero-stats">
+      <div class="hero-stat"><div class="lbl">FBS Programs</div><div class="val"><span id="hsFbs">—</span></div></div>
+      <div class="hero-stat"><div class="lbl">FCS Programs</div><div class="val"><span id="hsFcs">—</span></div></div>
+      <div class="hero-stat"><div class="lbl">Conferences</div><div class="val"><span id="hsConf">—</span></div></div>
+      <div class="hero-stat"><div class="lbl">Your Best</div><div class="val"><span class="accent" id="hsBest">—</span></div></div>
+    </div>
+  </div>
+
+  <div class="section-h">
+    <h2>Choose Your Game</h2>
+    <span class="sub">9 modes</span>
+  </div>
+  <div class="mode-grid">
+    <div class="mode-card" onclick="goTab('helmet')">
+      <div class="num">01</div>
+      <h3>Helmet Quiz</h3>
+      <p>Logo flashes on screen — name the program. Filter by conference, division, or random.</p>
+      <div class="meta">Multiple choice · 10 questions</div>
+    </div>
+    <div class="mode-card" onclick="goTab('fill')">
+      <div class="num">02</div>
+      <h3>THE ___</h3>
+      <p>Type the missing nickname. THE OHIO STATE → BUCKEYES. Type to win.</p>
+      <div class="meta">Type-in · 15 questions</div>
+    </div>
+    <div class="mode-card" onclick="goTab('conference')">
+      <div class="num">03</div>
+      <h3>Conference Sort</h3>
+      <p>Place each team in its correct league. Test your realignment knowledge.</p>
+      <div class="meta">Multiple choice · 12 questions</div>
+    </div>
+    <div class="mode-card" onclick="goTab('location')">
+      <div class="num">04</div>
+      <h3>Where At?</h3>
+      <p>Match the school to its city and state. Easier if you know your geography.</p>
+      <div class="meta">Multiple choice · 12 questions</div>
+    </div>
+    <div class="mode-card" onclick="goTab('grid')">
+      <div class="num">05</div>
+      <h3>Daily Grid</h3>
+      <p>3×3 grid — fill each cell with a team that fits both row and column criteria.</p>
+      <div class="meta">9 cells · resets daily</div>
+    </div>
+    <div class="mode-card" onclick="goTab('custom')">
+      <div class="num">06</div>
+      <h3>Custom Quiz</h3>
+      <p>Build your own question set. Share with friends via a generated code.</p>
+      <div class="meta">Builder · unlimited</div>
+    </div>
+    <div class="mode-card" onclick="goTab('osu')">
+      <div class="num">07</div>
+      <h3>Buckeyes Spotlight</h3>
+      <p>Deep dive on Ohio State — history, records, traditions, all-time greats.</p>
+      <div class="meta">Encyclopedia + quiz</div>
+    </div>
+    <div class="mode-card" onclick="goTab('michigan')" style="border-color:var(--scarlet)">
+      <div class="num">08</div>
+      <h3>Beat Michigan</h3>
+      <p>The greatest rivalry in sports. Trivia, history, and good old-fashioned trash talk.</p>
+      <div class="meta">Rivalry archive</div>
+    </div>
+  </div>
+</section>
+
+<!-- HELMET QUIZ -->
+
+<section class="panel" id="panel-helmet">
+  <div class="section-h"><h2>Helmet Quiz</h2><span class="sub">Identify the program</span></div>
+  <div class="quiz-wrap" id="helmetQuiz"></div>
+</section>
+
+<!-- FILL IN THE BLANK -->
+
+<section class="panel" id="panel-fill">
+  <div class="section-h"><h2>THE ___</h2><span class="sub">Type the missing nickname</span></div>
+  <div class="quiz-wrap" id="fillQuiz"></div>
+</section>
+
+<!-- CONFERENCE -->
+
+<section class="panel" id="panel-conference">
+  <div class="section-h"><h2>Conference Sort</h2><span class="sub">Place each team in its league</span></div>
+  <div class="quiz-wrap" id="confQuiz"></div>
+</section>
+
+<!-- LOCATION -->
+
+<section class="panel" id="panel-location">
+  <div class="section-h"><h2>Where At?</h2><span class="sub">Match school to city and state</span></div>
+  <div class="quiz-wrap" id="locQuiz"></div>
+</section>
+
+<!-- DAILY GRID -->
+
+<section class="panel" id="panel-grid">
+  <div class="section-h"><h2>Daily Grid</h2><span class="sub" id="gridDate">—</span></div>
+  <div id="dailyGridWrap"></div>
+</section>
+
+<!-- CUSTOM -->
+
+<section class="panel" id="panel-custom">
+  <div class="section-h"><h2>Custom Quiz Builder</h2><span class="sub">Make your own</span></div>
+  <div id="customWrap"></div>
+</section>
+
+<!-- OHIO STATE SPOTLIGHT -->
+
+<section class="panel" id="panel-osu">
+  <div id="osuWrap"></div>
+</section>
+
+<!-- BEAT MICHIGAN -->
+
+<section class="panel" id="panel-michigan">
+  <div id="michiganWrap"></div>
+</section>
+
+</div>
+
+<script>
+/* ============================================================
+   APP STATE + STORAGE
+   ============================================================ */
+const STORE = {
+  scores: 'gridiron_scores_v1',
+  best: 'gridiron_best_v1',
+  streak: 'gridiron_streak_v1',
+  custom: 'gridiron_custom_v1',
+  grid: 'gridiron_grid_v1',
+  teams: 'gridiron_teams_v1'
+};
+const ls_get = (k, d) => { try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : d; } catch(e) { return d; } };
+const ls_set = (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch(e) {} };
+
+const state = {
+  teams: [],
+  byDivision: { FBS: [], FCS: [] },
+  byConference: {},
+  scores: ls_get(STORE.scores, { games: 0, correct: 0, byMode: {} }),
+  best: ls_get(STORE.best, {}),
+  streak: ls_get(STORE.streak, 0),
+  current: null,
+  loading: true
+};
+
+function updateScoreUI() {
+  document.getElementById('streakVal').textContent = state.streak;
+  document.getElementById('totalVal').textContent = state.scores.correct;
+  const bestPct = Object.values(state.best).reduce((m, v) => Math.max(m, v.pct || 0), 0);
+  document.getElementById('hsBest').textContent = bestPct ? bestPct + '%' : '—';
+}
+
+/* ============================================================
+   TAB CONTROLLER
+   ============================================================ */
+function goTab(name) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t.dataset.tab === name));
+  document.querySelectorAll('.panel').forEach(p => p.classList.toggle('active', p.id === `panel-${name}`));
+  if (name === 'helmet') startHelmetQuiz();
+  if (name === 'fill') startFillQuiz();
+  if (name === 'conference') startConferenceQuiz();
+  if (name === 'location') startLocationQuiz();
+  if (name === 'grid') renderDailyGrid();
+  if (name === 'custom') renderCustomBuilder();
+  if (name === 'osu') renderOSUSpotlight();
+  if (name === 'michigan') renderMichiganTab();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+document.getElementById('tabs').addEventListener('click', (e) => {
+  const t = e.target.closest('.tab');
+  if (t) goTab(t.dataset.tab);
+});
+window.goTab = goTab;
+
+/* ============================================================
+   FCS SUPPLEMENT (ESPN's main teams endpoint returns FBS only)
+   ============================================================ */
+const FCS_SUPPLEMENT = [
+  // Big Sky
+  {id:'13',name:'Cal Poly',mascot:'Mustangs',city:'San Luis Obispo',state:'CA',conference:'Big Sky',division:'FCS'},
+  {id:'331',name:'Eastern Washington',mascot:'Eagles',city:'Cheney',state:'WA',conference:'Big Sky',division:'FCS'},
+  {id:'70',name:'Idaho',mascot:'Vandals',city:'Moscow',state:'ID',conference:'Big Sky',division:'FCS'},
+  {id:'304',name:'Idaho State',mascot:'Bengals',city:'Pocatello',state:'ID',conference:'Big Sky',division:'FCS'},
+  {id:'149',name:'Montana',mascot:'Grizzlies',city:'Missoula',state:'MT',conference:'Big Sky',division:'FCS'},
+  {id:'147',name:'Montana State',mascot:'Bobcats',city:'Bozeman',state:'MT',conference:'Big Sky',division:'FCS'},
+  {id:'2464',name:'Northern Arizona',mascot:'Lumberjacks',city:'Flagstaff',state:'AZ',conference:'Big Sky',division:'FCS'},
+  {id:'2465',name:'Northern Colorado',mascot:'Bears',city:'Greeley',state:'CO',conference:'Big Sky',division:'FCS'},
+  {id:'2502',name:'Portland State',mascot:'Vikings',city:'Portland',state:'OR',conference:'Big Sky',division:'FCS'},
+  {id:'16',name:'Sacramento State',mascot:'Hornets',city:'Sacramento',state:'CA',conference:'Big Sky',division:'FCS'},
+  {id:'302',name:'UC Davis',mascot:'Aggies',city:'Davis',state:'CA',conference:'Big Sky',division:'FCS'},
+  {id:'2754',name:'Weber State',mascot:'Wildcats',city:'Ogden',state:'UT',conference:'Big Sky',division:'FCS'},
+  // CAA
+  {id:'399',name:'Albany',mascot:'Great Danes',city:'Albany',state:'NY',conference:'CAA',division:'FCS'},
+  {id:'2803',name:'Bryant',mascot:'Bulldogs',city:'Smithfield',state:'RI',conference:'CAA',division:'FCS'},
+  {id:'2097',name:'Campbell',mascot:'Fighting Camels',city:'Buies Creek',state:'NC',conference:'CAA',division:'FCS'},
+  {id:'2210',name:'Elon',mascot:'Phoenix',city:'Elon',state:'NC',conference:'CAA',division:'FCS'},
+  {id:'2284',name:'Hampton',mascot:'Pirates',city:'Hampton',state:'VA',conference:'CAA',division:'FCS'},
+  {id:'311',name:'Maine',mascot:'Black Bears',city:'Orono',state:'ME',conference:'CAA',division:'FCS'},
+  {id:'2405',name:'Monmouth',mascot:'Hawks',city:'West Long Branch',state:'NJ',conference:'CAA',division:'FCS'},
+  {id:'160',name:'New Hampshire',mascot:'Wildcats',city:'Durham',state:'NH',conference:'CAA',division:'FCS'},
+  {id:'2448',name:'North Carolina A&T',mascot:'Aggies',city:'Greensboro',state:'NC',conference:'CAA',division:'FCS'},
+  {id:'227',name:'Rhode Island',mascot:'Rams',city:'Kingston',state:'RI',conference:'CAA',division:'FCS'},
+  {id:'2619',name:'Stony Brook',mascot:'Seawolves',city:'Stony Brook',state:'NY',conference:'CAA',division:'FCS'},
+  {id:'119',name:'Towson',mascot:'Tigers',city:'Towson',state:'MD',conference:'CAA',division:'FCS'},
+  // Ivy
+  {id:'225',name:'Brown',mascot:'Bears',city:'Providence',state:'RI',conference:'Ivy',division:'FCS'},
+  {id:'171',name:'Columbia',mascot:'Lions',city:'New York',state:'NY',conference:'Ivy',division:'FCS'},
+  {id:'172',name:'Cornell',mascot:'Big Red',city:'Ithaca',state:'NY',conference:'Ivy',division:'FCS'},
+  {id:'159',name:'Dartmouth',mascot:'Big Green',city:'Hanover',state:'NH',conference:'Ivy',division:'FCS'},
+  {id:'108',name:'Harvard',mascot:'Crimson',city:'Cambridge',state:'MA',conference:'Ivy',division:'FCS'},
+  {id:'219',name:'Penn',mascot:'Quakers',city:'Philadelphia',state:'PA',conference:'Ivy',division:'FCS'},
+  {id:'163',name:'Princeton',mascot:'Tigers',city:'Princeton',state:'NJ',conference:'Ivy',division:'FCS'},
+  {id:'43',name:'Yale',mascot:'Bulldogs',city:'New Haven',state:'CT',conference:'Ivy',division:'FCS'},
+  // MEAC
+  {id:'2169',name:'Delaware State',mascot:'Hornets',city:'Dover',state:'DE',conference:'MEAC',division:'FCS'},
+  {id:'47',name:'Howard',mascot:'Bison',city:'Washington',state:'DC',conference:'MEAC',division:'FCS'},
+  {id:'2415',name:'Morgan State',mascot:'Bears',city:'Baltimore',state:'MD',conference:'MEAC',division:'FCS'},
+  {id:'2450',name:'Norfolk State',mascot:'Spartans',city:'Norfolk',state:'VA',conference:'MEAC',division:'FCS'},
+  {id:'2428',name:'North Carolina Central',mascot:'Eagles',city:'Durham',state:'NC',conference:'MEAC',division:'FCS'},
+  {id:'2569',name:'South Carolina State',mascot:'Bulldogs',city:'Orangeburg',state:'SC',conference:'MEAC',division:'FCS'},
+  // MVFC
+  {id:'2287',name:'Illinois State',mascot:'Redbirds',city:'Normal',state:'IL',conference:'MVFC',division:'FCS'},
+  {id:'282',name:'Indiana State',mascot:'Sycamores',city:'Terre Haute',state:'IN',conference:'MVFC',division:'FCS'},
+  {id:'93',name:'Murray State',mascot:'Racers',city:'Murray',state:'KY',conference:'MVFC',division:'FCS'},
+  {id:'155',name:'North Dakota',mascot:'Fighting Hawks',city:'Grand Forks',state:'ND',conference:'MVFC',division:'FCS'},
+  {id:'2449',name:'North Dakota State',mascot:'Bison',city:'Fargo',state:'ND',conference:'MVFC',division:'FCS'},
+  {id:'2460',name:'Northern Iowa',mascot:'Panthers',city:'Cedar Falls',state:'IA',conference:'MVFC',division:'FCS'},
+  {id:'233',name:'South Dakota',mascot:'Coyotes',city:'Vermillion',state:'SD',conference:'MVFC',division:'FCS'},
+  {id:'2571',name:'South Dakota State',mascot:'Jackrabbits',city:'Brookings',state:'SD',conference:'MVFC',division:'FCS'},
+  {id:'79',name:'Southern Illinois',mascot:'Salukis',city:'Carbondale',state:'IL',conference:'MVFC',division:'FCS'},
+  {id:'2754',name:'Youngstown State',mascot:'Penguins',city:'Youngstown',state:'OH',conference:'MVFC',division:'FCS'},
+  // Patriot
+  {id:'2083',name:'Bucknell',mascot:'Bison',city:'Lewisburg',state:'PA',conference:'Patriot',division:'FCS'},
+  {id:'2117',name:'Colgate',mascot:'Raiders',city:'Hamilton',state:'NY',conference:'Patriot',division:'FCS'},
+  {id:'2230',name:'Fordham',mascot:'Rams',city:'Bronx',state:'NY',conference:'Patriot',division:'FCS'},
+  {id:'46',name:'Holy Cross',mascot:'Crusaders',city:'Worcester',state:'MA',conference:'Patriot',division:'FCS'},
+  {id:'322',name:'Lafayette',mascot:'Leopards',city:'Easton',state:'PA',conference:'Patriot',division:'FCS'},
+  {id:'2329',name:'Lehigh',mascot:'Mountain Hawks',city:'Bethlehem',state:'PA',conference:'Patriot',division:'FCS'},
+  // Southern (SoCon)
+  {id:'236',name:'Chattanooga',mascot:'Mocs',city:'Chattanooga',state:'TN',conference:'SoCon',division:'FCS'},
+  {id:'2193',name:'East Tennessee State',mascot:'Buccaneers',city:'Johnson City',state:'TN',conference:'SoCon',division:'FCS'},
+  {id:'231',name:'Furman',mascot:'Paladins',city:'Greenville',state:'SC',conference:'SoCon',division:'FCS'},
+  {id:'2382',name:'Mercer',mascot:'Bears',city:'Macon',state:'GA',conference:'SoCon',division:'FCS'},
+  {id:'2535',name:'Samford',mascot:'Bulldogs',city:'Birmingham',state:'AL',conference:'SoCon',division:'FCS'},
+  {id:'2643',name:'The Citadel',mascot:'Bulldogs',city:'Charleston',state:'SC',conference:'SoCon',division:'FCS'},
+  {id:'2678',name:'VMI',mascot:'Keydets',city:'Lexington',state:'VA',conference:'SoCon',division:'FCS'},
+  {id:'2717',name:'Western Carolina',mascot:'Catamounts',city:'Cullowhee',state:'NC',conference:'SoCon',division:'FCS'},
+  {id:'2727',name:'Wofford',mascot:'Terriers',city:'Spartanburg',state:'SC',conference:'SoCon',division:'FCS'},
+  // Southland
+  {id:'2261',name:'Houston Christian',mascot:'Huskies',city:'Houston',state:'TX',conference:'Southland',division:'FCS'},
+  {id:'2349',name:'Lamar',mascot:'Cardinals',city:'Beaumont',state:'TX',conference:'Southland',division:'FCS'},
+  {id:'2377',name:'McNeese',mascot:'Cowboys',city:'Lake Charles',state:'LA',conference:'Southland',division:'FCS'},
+  {id:'2447',name:'Nicholls',mascot:'Colonels',city:'Thibodaux',state:'LA',conference:'Southland',division:'FCS'},
+  {id:'2466',name:'Northwestern State',mascot:'Demons',city:'Natchitoches',state:'LA',conference:'Southland',division:'FCS'},
+  {id:'2552',name:'Southeastern Louisiana',mascot:'Lions',city:'Hammond',state:'LA',conference:'Southland',division:'FCS'},
+  // SWAC
+  {id:'2010',name:'Alabama A&M',mascot:'Bulldogs',city:'Huntsville',state:'AL',conference:'SWAC',division:'FCS'},
+  {id:'2011',name:'Alabama State',mascot:'Hornets',city:'Montgomery',state:'AL',conference:'SWAC',division:'FCS'},
+  {id:'2016',name:'Alcorn State',mascot:'Braves',city:'Lorman',state:'MS',conference:'SWAC',division:'FCS'},
+  {id:'2029',name:'Arkansas-Pine Bluff',mascot:'Golden Lions',city:'Pine Bluff',state:'AR',conference:'SWAC',division:'FCS'},
+  {id:'2065',name:'Bethune-Cookman',mascot:'Wildcats',city:'Daytona Beach',state:'FL',conference:'SWAC',division:'FCS'},
+  {id:'50',name:'Florida A&M',mascot:'Rattlers',city:'Tallahassee',state:'FL',conference:'SWAC',division:'FCS'},
+  {id:'2296',name:'Grambling State',mascot:'Tigers',city:'Grambling',state:'LA',conference:'SWAC',division:'FCS'},
+  {id:'2320',name:'Jackson State',mascot:'Tigers',city:'Jackson',state:'MS',conference:'SWAC',division:'FCS'},
+  {id:'2400',name:'Mississippi Valley State',mascot:'Delta Devils',city:'Itta Bena',state:'MS',conference:'SWAC',division:'FCS'},
+  {id:'2581',name:'Prairie View A&M',mascot:'Panthers',city:'Prairie View',state:'TX',conference:'SWAC',division:'FCS'},
+  {id:'2582',name:'Southern',mascot:'Jaguars',city:'Baton Rouge',state:'LA',conference:'SWAC',division:'FCS'},
+  {id:'2640',name:'Texas Southern',mascot:'Tigers',city:'Houston',state:'TX',conference:'SWAC',division:'FCS'}
+];
+
+const FBS_CONFERENCE_MAP = {
+  'Alabama':'SEC','Arkansas':'SEC','Auburn':'SEC','Florida':'SEC','Georgia':'SEC','Kentucky':'SEC','LSU':'SEC',
+  'Mississippi State':'SEC','Missouri':'SEC','Oklahoma':'SEC','Ole Miss':'SEC','South Carolina':'SEC','Tennessee':'SEC',
+  'Texas':'SEC','Texas A&M':'SEC','Vanderbilt':'SEC',
+  'Illinois':'Big Ten','Indiana':'Big Ten','Iowa':'Big Ten','Maryland':'Big Ten','Michigan':'Big Ten',
+  'Michigan State':'Big Ten','Minnesota':'Big Ten','Nebraska':'Big Ten','Northwestern':'Big Ten','Ohio State':'Big Ten',
+  'Oregon':'Big Ten','Penn State':'Big Ten','Purdue':'Big Ten','Rutgers':'Big Ten','UCLA':'Big Ten','USC':'Big Ten',
+  'Washington':'Big Ten','Wisconsin':'Big Ten',
+  'Boston College':'ACC','California':'ACC','Clemson':'ACC','Duke':'ACC','Florida State':'ACC','Georgia Tech':'ACC',
+  'Louisville':'ACC','Miami':'ACC','NC State':'ACC','North Carolina':'ACC','Notre Dame':'ACC','Pittsburgh':'ACC',
+  'SMU':'ACC','Stanford':'ACC','Syracuse':'ACC','Virginia':'ACC','Virginia Tech':'ACC','Wake Forest':'ACC',
+  'Arizona':'Big 12','Arizona State':'Big 12','Baylor':'Big 12','BYU':'Big 12','Cincinnati':'Big 12',
+  'Colorado':'Big 12','Houston':'Big 12','Iowa State':'Big 12','Kansas':'Big 12','Kansas State':'Big 12',
+  'Oklahoma State':'Big 12','TCU':'Big 12','Texas Tech':'Big 12','UCF':'Big 12','Utah':'Big 12','West Virginia':'Big 12',
+  'Army':'American','Charlotte':'American','East Carolina':'American','Florida Atlantic':'American','Memphis':'American',
+  'Navy':'American','North Texas':'American','Rice':'American','South Florida':'American','Temple':'American',
+  'Tulane':'American','Tulsa':'American','UAB':'American','UTSA':'American',
+  'Delaware':'C-USA','FIU':'C-USA','Jacksonville State':'C-USA','Kennesaw State':'C-USA','Liberty':'C-USA',
+  'Louisiana Tech':'C-USA','Middle Tennessee':'C-USA','Missouri State':'C-USA','New Mexico State':'C-USA',
+  'Sam Houston':'C-USA','UTEP':'C-USA','Western Kentucky':'C-USA',
+  'Akron':'MAC','Ball State':'MAC','Bowling Green':'MAC','Buffalo':'MAC','Central Michigan':'MAC','Eastern Michigan':'MAC',
+  'Kent State':'MAC','Miami (OH)':'MAC','Northern Illinois':'MAC','Ohio':'MAC','Toledo':'MAC','UMass':'MAC','Western Michigan':'MAC',
+  'Air Force':'Mountain West','Boise State':'Mountain West','Colorado State':'Mountain West','Fresno State':'Mountain West',
+  "Hawai'i":'Mountain West','Hawaii':'Mountain West','Nevada':'Mountain West','New Mexico':'Mountain West','San Diego State':'Mountain West',
+  'San Jose State':'Mountain West','UNLV':'Mountain West','Utah State':'Mountain West','Wyoming':'Mountain West',
+  'Oregon State':'Pac-12','Washington State':'Pac-12',
+  'Appalachian State':'Sun Belt','Arkansas State':'Sun Belt','Coastal Carolina':'Sun Belt','Georgia Southern':'Sun Belt',
+  'Georgia State':'Sun Belt','James Madison':'Sun Belt','Louisiana':'Sun Belt','Marshall':'Sun Belt',
+  'Old Dominion':'Sun Belt','South Alabama':'Sun Belt','Southern Miss':'Sun Belt','Texas State':'Sun Belt',
+  'Troy':'Sun Belt','UL Monroe':'Sun Belt',
+  'Connecticut':'FBS Independent','UConn':'FBS Independent'
+};
+
+const FBS_CITY_MAP = {
+  'Alabama':{city:'Tuscaloosa',state:'AL'},'Arkansas':{city:'Fayetteville',state:'AR'},'Auburn':{city:'Auburn',state:'AL'},
+  'Florida':{city:'Gainesville',state:'FL'},'Georgia':{city:'Athens',state:'GA'},'Kentucky':{city:'Lexington',state:'KY'},
+  'LSU':{city:'Baton Rouge',state:'LA'},'Mississippi State':{city:'Starkville',state:'MS'},'Missouri':{city:'Columbia',state:'MO'},
+  'Oklahoma':{city:'Norman',state:'OK'},'Ole Miss':{city:'Oxford',state:'MS'},'South Carolina':{city:'Columbia',state:'SC'},
+  'Tennessee':{city:'Knoxville',state:'TN'},'Texas':{city:'Austin',state:'TX'},'Texas A&M':{city:'College Station',state:'TX'},
+  'Vanderbilt':{city:'Nashville',state:'TN'},
+  'Illinois':{city:'Champaign',state:'IL'},'Indiana':{city:'Bloomington',state:'IN'},'Iowa':{city:'Iowa City',state:'IA'},
+  'Maryland':{city:'College Park',state:'MD'},'Michigan':{city:'Ann Arbor',state:'MI'},'Michigan State':{city:'East Lansing',state:'MI'},
+  'Minnesota':{city:'Minneapolis',state:'MN'},'Nebraska':{city:'Lincoln',state:'NE'},'Northwestern':{city:'Evanston',state:'IL'},
+  'Ohio State':{city:'Columbus',state:'OH'},'Oregon':{city:'Eugene',state:'OR'},'Penn State':{city:'University Park',state:'PA'},
+  'Purdue':{city:'West Lafayette',state:'IN'},'Rutgers':{city:'Piscataway',state:'NJ'},'UCLA':{city:'Los Angeles',state:'CA'},
+  'USC':{city:'Los Angeles',state:'CA'},'Washington':{city:'Seattle',state:'WA'},'Wisconsin':{city:'Madison',state:'WI'},
+  'Boston College':{city:'Chestnut Hill',state:'MA'},'California':{city:'Berkeley',state:'CA'},'Clemson':{city:'Clemson',state:'SC'},
+  'Duke':{city:'Durham',state:'NC'},'Florida State':{city:'Tallahassee',state:'FL'},'Georgia Tech':{city:'Atlanta',state:'GA'},
+  'Louisville':{city:'Louisville',state:'KY'},'Miami':{city:'Coral Gables',state:'FL'},'NC State':{city:'Raleigh',state:'NC'},
+  'North Carolina':{city:'Chapel Hill',state:'NC'},'Notre Dame':{city:'Notre Dame',state:'IN'},'Pittsburgh':{city:'Pittsburgh',state:'PA'},
+  'SMU':{city:'Dallas',state:'TX'},'Stanford':{city:'Stanford',state:'CA'},'Syracuse':{city:'Syracuse',state:'NY'},
+  'Virginia':{city:'Charlottesville',state:'VA'},'Virginia Tech':{city:'Blacksburg',state:'VA'},'Wake Forest':{city:'Winston-Salem',state:'NC'},
+  'Arizona':{city:'Tucson',state:'AZ'},'Arizona State':{city:'Tempe',state:'AZ'},'Baylor':{city:'Waco',state:'TX'},
+  'BYU':{city:'Provo',state:'UT'},'Cincinnati':{city:'Cincinnati',state:'OH'},'Colorado':{city:'Boulder',state:'CO'},
+  'Houston':{city:'Houston',state:'TX'},'Iowa State':{city:'Ames',state:'IA'},'Kansas':{city:'Lawrence',state:'KS'},
+  'Kansas State':{city:'Manhattan',state:'KS'},'Oklahoma State':{city:'Stillwater',state:'OK'},'TCU':{city:'Fort Worth',state:'TX'},
+  'Texas Tech':{city:'Lubbock',state:'TX'},'UCF':{city:'Orlando',state:'FL'},'Utah':{city:'Salt Lake City',state:'UT'},
+  'West Virginia':{city:'Morgantown',state:'WV'},
+  'Army':{city:'West Point',state:'NY'},'Charlotte':{city:'Charlotte',state:'NC'},'East Carolina':{city:'Greenville',state:'NC'},
+  'Florida Atlantic':{city:'Boca Raton',state:'FL'},'Memphis':{city:'Memphis',state:'TN'},'Navy':{city:'Annapolis',state:'MD'},
+  'North Texas':{city:'Denton',state:'TX'},'Rice':{city:'Houston',state:'TX'},'South Florida':{city:'Tampa',state:'FL'},
+  'Temple':{city:'Philadelphia',state:'PA'},'Tulane':{city:'New Orleans',state:'LA'},'Tulsa':{city:'Tulsa',state:'OK'},
+  'UAB':{city:'Birmingham',state:'AL'},'UTSA':{city:'San Antonio',state:'TX'},
+  'Delaware':{city:'Newark',state:'DE'},'FIU':{city:'Miami',state:'FL'},'Jacksonville State':{city:'Jacksonville',state:'AL'},
+  'Kennesaw State':{city:'Kennesaw',state:'GA'},'Liberty':{city:'Lynchburg',state:'VA'},'Louisiana Tech':{city:'Ruston',state:'LA'},
+  'Middle Tennessee':{city:'Murfreesboro',state:'TN'},'Missouri State':{city:'Springfield',state:'MO'},
+  'New Mexico State':{city:'Las Cruces',state:'NM'},'Sam Houston':{city:'Huntsville',state:'TX'},'UTEP':{city:'El Paso',state:'TX'},
+  'Western Kentucky':{city:'Bowling Green',state:'KY'},
+  'Akron':{city:'Akron',state:'OH'},'Ball State':{city:'Muncie',state:'IN'},'Bowling Green':{city:'Bowling Green',state:'OH'},
+  'Buffalo':{city:'Buffalo',state:'NY'},'Central Michigan':{city:'Mount Pleasant',state:'MI'},'Eastern Michigan':{city:'Ypsilanti',state:'MI'},
+  'Kent State':{city:'Kent',state:'OH'},'Miami (OH)':{city:'Oxford',state:'OH'},'Northern Illinois':{city:'DeKalb',state:'IL'},
+  'Ohio':{city:'Athens',state:'OH'},'Toledo':{city:'Toledo',state:'OH'},'UMass':{city:'Amherst',state:'MA'},'Western Michigan':{city:'Kalamazoo',state:'MI'},
+  'Air Force':{city:'Colorado Springs',state:'CO'},'Boise State':{city:'Boise',state:'ID'},'Colorado State':{city:'Fort Collins',state:'CO'},
+  'Fresno State':{city:'Fresno',state:'CA'},"Hawai'i":{city:'Honolulu',state:'HI'},'Hawaii':{city:'Honolulu',state:'HI'},
+  'Nevada':{city:'Reno',state:'NV'},'New Mexico':{city:'Albuquerque',state:'NM'},'San Diego State':{city:'San Diego',state:'CA'},
+  'San Jose State':{city:'San Jose',state:'CA'},'UNLV':{city:'Las Vegas',state:'NV'},'Utah State':{city:'Logan',state:'UT'},'Wyoming':{city:'Laramie',state:'WY'},
+  'Oregon State':{city:'Corvallis',state:'OR'},'Washington State':{city:'Pullman',state:'WA'},
+  'Appalachian State':{city:'Boone',state:'NC'},'Arkansas State':{city:'Jonesboro',state:'AR'},'Coastal Carolina':{city:'Conway',state:'SC'},
+  'Georgia Southern':{city:'Statesboro',state:'GA'},'Georgia State':{city:'Atlanta',state:'GA'},'James Madison':{city:'Harrisonburg',state:'VA'},
+  'Louisiana':{city:'Lafayette',state:'LA'},'Marshall':{city:'Huntington',state:'WV'},'Old Dominion':{city:'Norfolk',state:'VA'},
+  'South Alabama':{city:'Mobile',state:'AL'},'Southern Miss':{city:'Hattiesburg',state:'MS'},'Texas State':{city:'San Marcos',state:'TX'},
+  'Troy':{city:'Troy',state:'AL'},'UL Monroe':{city:'Monroe',state:'LA'},
+  'Connecticut':{city:'Storrs',state:'CT'},'UConn':{city:'Storrs',state:'CT'}
+};
+
+async function loadTeams() {
+  const cached = ls_get(STORE.teams, null);
+  if (cached && cached.ts && (Date.now() - cached.ts < 7*24*60*60*1000) && cached.teams && cached.teams.length > 100) {
+    state.teams = cached.teams;
+    organizeTeams();
+    return;
+  }
+  try {
+    const r = await fetch('https://site.api.espn.com/apis/site/v2/sports/football/college-football/teams?limit=500');
+    const d = await r.json();
+    const espnTeams = (d?.sports?.[0]?.leagues?.[0]?.teams || []).map(t => {
+      const team = t.team || {};
+      return {
+        id: team.id,
+        name: team.location || team.shortDisplayName,
+        fullName: team.displayName || team.name,
+        mascot: team.name,
+        abbreviation: team.abbreviation,
+        color: team.color ? '#' + team.color : '#666',
+        altColor: team.alternateColor ? '#' + team.alternateColor : '#fff',
+        logo: team.logos?.[0]?.href || `https://a.espncdn.com/i/teamlogos/ncaa/500/${team.id}.png`,
+        division: 'FBS'
+      };
+    });
+    espnTeams.forEach(t => {
+      t.conference = FBS_CONFERENCE_MAP[t.fullName] || FBS_CONFERENCE_MAP[t.name] || 'FBS Independent';
+      const cm = FBS_CITY_MAP[t.fullName] || FBS_CITY_MAP[t.name];
+      t.city = cm?.city || '';
+      t.state = cm?.state || '';
+    });
+    const fcsTeams = FCS_SUPPLEMENT.map(t => ({
+      ...t,
+      fullName: `${t.name} ${t.mascot}`,
+      logo: `https://a.espncdn.com/i/teamlogos/ncaa/500/${t.id}.png`,
+      color: '#666', altColor: '#fff'
+    }));
+    state.teams = [...espnTeams, ...fcsTeams];
+    ls_set(STORE.teams, { ts: Date.now(), teams: state.teams });
+    organizeTeams();
+  } catch(e) {
+    console.warn('ESPN fetch failed, using FCS supplement only:', e);
+    state.teams = FCS_SUPPLEMENT.map(t => ({
+      ...t,
+      fullName: `${t.name} ${t.mascot}`,
+      logo: `https://a.espncdn.com/i/teamlogos/ncaa/500/${t.id}.png`,
+      color: '#666', altColor: '#fff'
+    }));
+    organizeTeams();
+  }
+}
+
+function organizeTeams() {
+  state.byDivision = { FBS: [], FCS: [] };
+  state.byConference = {};
+  state.teams.forEach(t => {
+    const div = t.division || 'FBS';
+    state.byDivision[div].push(t);
+    const conf = t.conference || 'Other';
+    state.byConference[conf] = state.byConference[conf] || [];
+    state.byConference[conf].push(t);
+  });
+  document.getElementById('hsFbs').textContent = state.byDivision.FBS.length;
+  document.getElementById('hsFcs').textContent = state.byDivision.FCS.length;
+  document.getElementById('hsConf').textContent = Object.keys(state.byConference).filter(c => c !== 'Other' && c !== 'FBS Independent').length;
+}
+
+function pick(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
+function pickN(arr, n, exclude) {
+  const pool = arr.filter(x => !exclude || !exclude.includes(x));
+  const out = [];
+  while (out.length < n && pool.length) {
+    const i = Math.floor(Math.random() * pool.length);
+    out.push(pool.splice(i, 1)[0]);
+  }
+  return out;
+}
+function shuffle(a) { for (let i = a.length-1; i > 0; i--) { const j = Math.floor(Math.random()*(i+1)); [a[i],a[j]] = [a[j],a[i]]; } return a; }
+
+function poolFor(filter) {
+  const div = filter?.division || 'all';
+  const conf = filter?.conference || 'all';
+  let pool = state.teams.slice();
+  if (div !== 'all') pool = pool.filter(t => (t.division || 'FBS') === div);
+  if (conf !== 'all') pool = pool.filter(t => t.conference === conf);
+  return pool;
+}
+
+function bumpScore(mode, correct, total) {
+  state.scores.games++;
+  state.scores.correct += correct;
+  state.scores.byMode[mode] = state.scores.byMode[mode] || { games:0, correct:0, total:0 };
+  state.scores.byMode[mode].games++;
+  state.scores.byMode[mode].correct += correct;
+  state.scores.byMode[mode].total += total;
+  ls_set(STORE.scores, state.scores);
+  const pct = total ? Math.round(correct/total*100) : 0;
+  if (!state.best[mode] || pct > state.best[mode].pct) {
+    state.best[mode] = { pct, correct, total, date: new Date().toISOString().slice(0,10) };
+    ls_set(STORE.best, state.best);
+  }
+  if (correct === total && total > 0) state.streak++;
+  else state.streak = 0;
+  ls_set(STORE.streak, state.streak);
+  updateScoreUI();
+}
+
+function escapeHtml(s) { return String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+
+/* ============================================================
+   QUIZ ENGINE — shared scaffolding
+   ============================================================ */
+const QUIZ_LEN = 10;
+
+function buildFilterUI(mode) {
+  const conferences = Object.keys(state.byConference)
+    .filter(c => c !== 'Other')
+    .sort((a,b) => state.byConference[b].length - state.byConference[a].length);
+  return `<div class="quiz-controls">
+    <div class="field">
+      <span class="lbl">Division</span>
+      <select class="select" id="${mode}-div">
+        <option value="all">All (FBS + FCS)</option>
+        <option value="FBS" selected>FBS only</option>
+        <option value="FCS">FCS only</option>
+      </select>
+    </div>
+    <div class="field">
+      <span class="lbl">Conference</span>
+      <select class="select" id="${mode}-conf">
+        <option value="all">All conferences</option>
+        ${conferences.map(c => `<option value="${escapeHtml(c)}">${escapeHtml(c)} (${state.byConference[c].length})</option>`).join('')}
+      </select>
+    </div>
+    <div class="field">
+      <span class="lbl">Length</span>
+      <select class="select" id="${mode}-len">
+        <option value="10" selected>10 questions</option>
+        <option value="15">15 questions</option>
+        <option value="20">20 questions</option>
+      </select>
+    </div>
+    <button class="btn" onclick="startMode('${mode}')">START</button>
+  </div>`;
+}
+
+function startMode(mode) {
+  const div = document.getElementById(`${mode}-div`)?.value || 'FBS';
+  const conf = document.getElementById(`${mode}-conf`)?.value || 'all';
+  const len = +(document.getElementById(`${mode}-len`)?.value || 10);
+  const pool = poolFor({ division: div, conference: conf });
+  if (pool.length < 4) {
+    alert('Not enough teams in this filter. Pick a broader scope.');
+    return;
+  }
+  state.current = { mode, pool, len, idx: 0, correct: 0, answers: [] };
+  if (mode === 'helmet') renderHelmetQ();
+  if (mode === 'fill') renderFillQ();
+  if (mode === 'conference') renderConfQ();
+  if (mode === 'location') renderLocQ();
+}
+window.startMode = startMode;
+
+function progressBar() {
+  const c = state.current;
+  return `<div class="quiz-progress">
+    <span>QUESTION <strong style="color:var(--text)">${c.idx + 1}</strong> / ${c.len}</span>
+    <span>SCORE: <strong style="color:var(--scarlet-hot)">${c.correct}</strong></span>
+  </div>
+  <div class="progress-bar"><div class="fill" style="width:${(c.idx / c.len) * 100}%"></div></div>`;
+}
+
+function quizResult() {
+  const c = state.current;
+  bumpScore(c.mode, c.correct, c.len);
+  const pct = Math.round(c.correct / c.len * 100);
+  const grade = pct >= 90 ? 'A+' : pct >= 80 ? 'A' : pct >= 70 ? 'B' : pct >= 60 ? 'C' : pct >= 50 ? 'D' : 'F';
+  const trash = pct >= 90 ? "You're built different. The real ones know." :
+                pct >= 80 ? "Solid Saturday IQ. Saturdays are your day." :
+                pct >= 70 ? "Decent fan. Get to a few more games." :
+                pct >= 60 ? "You watch RedZone and bail. We see you." :
+                pct >= 50 ? "Casual energy detected." :
+                "Did you mean to be on the soccer trivia app?";
+  const wrap = state.panelEl();
+  wrap.innerHTML = `<div class="quiz-stage"><div class="result">
+    <div class="muted" style="font-family:var(--mono);font-size:11px;letter-spacing:1.5px">FINAL</div>
+    <div class="score"><span class="accent">${c.correct}</span><span style="color:var(--text-3)">/</span>${c.len}</div>
+    <div class="pct">${pct}% · <span class="grade">${grade}</span></div>
+    <div style="margin-top:18px;color:var(--text-2);font-size:14px">${trash}</div>
+    <div class="result-detail">
+      ${c.answers.map((a,i) => `<div class="stat">
+        <div class="lbl">Q${i+1} · ${a.correct ? '<span style="color:var(--green)">✓</span>' : '<span style="color:var(--red-neg)">✗</span>'}</div>
+        <div class="val" style="font-size:14px;font-family:var(--body);text-transform:none">${escapeHtml(a.team.fullName || a.team.name)}</div>
+      </div>`).join('')}
+    </div>
+    <div class="q-actions">
+      <button class="btn lg" onclick="startMode('${c.mode}')">PLAY AGAIN</button>
+      <button class="btn ghost lg" onclick="goTab('home')">HOME</button>
+    </div>
+  </div></div>`;
+}
+
+state.panelEl = () => {
+  const m = state.current?.mode;
+  if (m === 'helmet') return document.getElementById('helmetQuiz');
+  if (m === 'fill') return document.getElementById('fillQuiz');
+  if (m === 'conference') return document.getElementById('confQuiz');
+  if (m === 'location') return document.getElementById('locQuiz');
+  return document.body;
+};
+
+function nextQuestion() {
+  state.current.idx++;
+  const m = state.current.mode;
+  if (state.current.idx >= state.current.len) {
+    quizResult();
+    return;
+  }
+  if (m === 'helmet') renderHelmetQ();
+  if (m === 'fill') renderFillQ();
+  if (m === 'conference') renderConfQ();
+  if (m === 'location') renderLocQ();
+}
+window.nextQuestion = nextQuestion;
+
+/* ============================================================
+   HELMET QUIZ
+   ============================================================ */
+function startHelmetQuiz() {
+  const wrap = document.getElementById('helmetQuiz');
+  wrap.innerHTML = buildFilterUI('helmet') + `<div class="empty"><span class="big">READY</span>Pick filters, hit START to begin the helmet quiz.</div>`;
+}
+function renderHelmetQ() {
+  const c = state.current;
+  const team = pick(c.pool);
+  const wrongs = pickN(c.pool, 3, [team]);
+  const choices = shuffle([team, ...wrongs]);
+  c.currentTeam = team;
+  c.choices = choices;
+  const wrap = state.panelEl();
+  wrap.innerHTML = `<div class="quiz-stage">
+    ${progressBar()}
+    <div class="helmet-card">
+      <img src="${team.logo}" alt="" onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'ph',textContent:'?'}))" />
+    </div>
+    <h3 class="q-prompt">Which program is this?</h3>
+    <div class="choices">
+      ${choices.map((t, i) => `<button class="choice" data-i="${i}" onclick="answerHelmet(${i})">
+        <span class="letter">${String.fromCharCode(65+i)}</span>${escapeHtml(t.fullName || (t.name + ' ' + t.mascot))}
+      </button>`).join('')}
+    </div>
+    <div class="q-feedback" id="qf"></div>
+  </div>`;
+}
+window.answerHelmet = function(i) {
+  const c = state.current;
+  const correct = c.choices[i].id === c.currentTeam.id;
+  c.answers.push({ team: c.currentTeam, correct });
+  if (correct) c.correct++;
+  document.querySelectorAll('.choice').forEach((el, idx) => {
+    el.disabled = true;
+    if (c.choices[idx].id === c.currentTeam.id) el.classList.add('correct');
+    else if (idx === i) el.classList.add('wrong');
+  });
+  const fb = document.getElementById('qf');
+  fb.classList.add('active', correct ? 'win' : 'lose');
+  fb.innerHTML = `${correct ? '✓ CORRECT' : '✗ WRONG'} <span class="answer">${escapeHtml(c.currentTeam.fullName || (c.currentTeam.name + ' ' + c.currentTeam.mascot))} · ${escapeHtml(c.currentTeam.conference || '')}</span>`;
+  setTimeout(nextQuestion, 1100);
+};
+
+/* ============================================================
+   FILL-IN-THE-BLANK QUIZ
+   ============================================================ */
+function startFillQuiz() {
+  const wrap = document.getElementById('fillQuiz');
+  wrap.innerHTML = buildFilterUI('fill') + `<div class="empty"><span class="big">THE _____</span>Type the missing nickname. Example: THE OHIO STATE → BUCKEYES.</div>`;
+}
+function renderFillQ() {
+  const c = state.current;
+  const team = pick(c.pool);
+  c.currentTeam = team;
+  const wrap = state.panelEl();
+  const schoolPart = team.name || team.fullName.split(' ').slice(0, -1).join(' ');
+  wrap.innerHTML = `<div class="quiz-stage">
+    ${progressBar()}
+    <div style="text-align:center;padding:30px 10px 20px">
+      <div style="font-family:var(--mono);font-size:11px;color:var(--text-3);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:14px">Complete the name</div>
+      <div class="q-prompt" style="font-size:38px;line-height:1.2">
+        THE <span class="accent">${escapeHtml(schoolPart.toUpperCase())}</span> _____
+      </div>
+    </div>
+    <input class="fill-input" id="fillIn" placeholder="MASCOT" autocomplete="off" autofocus />
+    <div class="q-actions">
+      <button class="btn" onclick="answerFill()">SUBMIT</button>
+      <button class="btn ghost" onclick="answerFill(true)">SKIP</button>
+    </div>
+    <div class="q-feedback" id="qf"></div>
+  </div>`;
+  const inp = document.getElementById('fillIn');
+  inp.focus();
+  inp.addEventListener('keydown', e => { if (e.key === 'Enter') answerFill(); });
+}
+window.answerFill = function(skip) {
+  const c = state.current;
+  const inp = document.getElementById('fillIn');
+  const guess = (inp.value || '').trim().toLowerCase();
+  const target = (c.currentTeam.mascot || '').toLowerCase();
+  // Accept if guess matches or contains the mascot, or vice versa
+  const correct = !skip && (guess === target || target.includes(guess) && guess.length >= 4 || guess.includes(target));
+  c.answers.push({ team: c.currentTeam, correct });
+  if (correct) c.correct++;
+  inp.classList.add(correct ? 'correct' : 'wrong');
+  inp.disabled = true;
+  const fb = document.getElementById('qf');
+  fb.classList.add('active', correct ? 'win' : 'lose');
+  fb.innerHTML = `${correct ? '✓ CORRECT' : (skip ? 'SKIPPED' : '✗ WRONG')} <span class="answer">${escapeHtml(c.currentTeam.mascot)} · ${escapeHtml(c.currentTeam.fullName)}</span>`;
+  setTimeout(nextQuestion, 1100);
+};
+
+/* ============================================================
+   CONFERENCE QUIZ
+   ============================================================ */
+function startConferenceQuiz() {
+  const wrap = document.getElementById('confQuiz');
+  wrap.innerHTML = buildFilterUI('conference') + `<div class="empty"><span class="big">SORT IT</span>Place each program in its correct conference.</div>`;
+}
+function renderConfQ() {
+  const c = state.current;
+  const validPool = c.pool.filter(t => t.conference && t.conference !== 'Other' && t.conference !== 'FBS Independent');
+  if (validPool.length < 4) { quizResult(); return; }
+  const team = pick(validPool);
+  const allConfs = [...new Set(state.teams.map(t => t.conference).filter(c => c && c !== 'Other'))];
+  const wrongs = pickN(allConfs.filter(x => x !== team.conference), 3);
+  const choices = shuffle([team.conference, ...wrongs]);
+  c.currentTeam = team;
+  c.choices = choices;
+  const wrap = state.panelEl();
+  wrap.innerHTML = `<div class="quiz-stage">
+    ${progressBar()}
+    <div class="helmet-card" style="padding:20px">
+      <img src="${team.logo}" alt="" onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'ph',textContent:'?'}))" style="max-width:120px;max-height:120px" />
+    </div>
+    <h3 class="q-prompt"><span class="accent">${escapeHtml(team.fullName || team.name)}</span><br><span style="font-size:18px;color:var(--text-2)">plays in which conference?</span></h3>
+    <div class="choices">
+      ${choices.map((conf, i) => `<button class="choice" onclick="answerConf(${i})">
+        <span class="letter">${String.fromCharCode(65+i)}</span>${escapeHtml(conf)}
+      </button>`).join('')}
+    </div>
+    <div class="q-feedback" id="qf"></div>
+  </div>`;
+}
+window.answerConf = function(i) {
+  const c = state.current;
+  const correct = c.choices[i] === c.currentTeam.conference;
+  c.answers.push({ team: c.currentTeam, correct });
+  if (correct) c.correct++;
+  document.querySelectorAll('.choice').forEach((el, idx) => {
+    el.disabled = true;
+    if (c.choices[idx] === c.currentTeam.conference) el.classList.add('correct');
+    else if (idx === i) el.classList.add('wrong');
+  });
+  const fb = document.getElementById('qf');
+  fb.classList.add('active', correct ? 'win' : 'lose');
+  fb.innerHTML = `${correct ? '✓ CORRECT' : '✗ WRONG'} <span class="answer">${escapeHtml(c.currentTeam.fullName)} · ${escapeHtml(c.currentTeam.conference)}</span>`;
+  setTimeout(nextQuestion, 1100);
+};
+
+/* ============================================================
+   LOCATION QUIZ
+   ============================================================ */
+function startLocationQuiz() {
+  const wrap = document.getElementById('locQuiz');
+  wrap.innerHTML = buildFilterUI('location') + `<div class="empty"><span class="big">WHERE AT?</span>Match each program to its city &amp; state.</div>`;
+}
+function renderLocQ() {
+  const c = state.current;
+  const validPool = c.pool.filter(t => t.city && t.state);
+  if (validPool.length < 4) { quizResult(); return; }
+  const team = pick(validPool);
+  const wrongs = pickN(validPool.filter(t => t.id !== team.id), 3);
+  const choices = shuffle([team, ...wrongs]).map(t => ({ city: t.city, state: t.state, ref: t }));
+  c.currentTeam = team;
+  c.choices = choices;
+  const wrap = state.panelEl();
+  wrap.innerHTML = `<div class="quiz-stage">
+    ${progressBar()}
+    <div class="helmet-card" style="padding:20px">
+      <img src="${team.logo}" alt="" onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'ph',textContent:'?'}))" style="max-width:140px;max-height:140px" />
+    </div>
+    <h3 class="q-prompt"><span class="accent">${escapeHtml(team.fullName || team.name)}</span><br><span style="font-size:18px;color:var(--text-2)">is located where?</span></h3>
+    <div class="choices">
+      ${choices.map((ch, i) => `<button class="choice" onclick="answerLoc(${i})">
+        <span class="letter">${String.fromCharCode(65+i)}</span>${escapeHtml(ch.city)}, ${escapeHtml(ch.state)}
+      </button>`).join('')}
+    </div>
+    <div class="q-feedback" id="qf"></div>
+  </div>`;
+}
+window.answerLoc = function(i) {
+  const c = state.current;
+  const ch = c.choices[i];
+  const correct = ch.city === c.currentTeam.city && ch.state === c.currentTeam.state;
+  c.answers.push({ team: c.currentTeam, correct });
+  if (correct) c.correct++;
+  document.querySelectorAll('.choice').forEach((el, idx) => {
+    el.disabled = true;
+    const cc = c.choices[idx];
+    if (cc.city === c.currentTeam.city && cc.state === c.currentTeam.state) el.classList.add('correct');
+    else if (idx === i) el.classList.add('wrong');
+  });
+  const fb = document.getElementById('qf');
+  fb.classList.add('active', correct ? 'win' : 'lose');
+  fb.innerHTML = `${correct ? '✓ CORRECT' : '✗ WRONG'} <span class="answer">${escapeHtml(c.currentTeam.fullName)} · ${escapeHtml(c.currentTeam.city)}, ${escapeHtml(c.currentTeam.state)}</span>`;
+  setTimeout(nextQuestion, 1100);
+};
+
+/* ============================================================
+   DAILY GRID (immortals 3x3)
+   ============================================================ */
+const GRID_CONFIGS = [
+  { rows: ['SEC', 'Big Ten', 'Big 12'], cols: ['Located in Texas', 'Founded before 1900', 'Mascot is a Tiger or Bulldog'] },
+  { rows: ['ACC', 'SEC', 'Big Ten'], cols: ['Located in California or Florida', 'Has won a national title', 'Mascot is a feline'] },
+  { rows: ['Big 12', 'Sun Belt', 'MAC'], cols: ['City contains a directional word', 'Located in the Midwest', 'State capital home'] },
+  { rows: ['SEC', 'ACC', 'American'], cols: ['Located in NC or SC', 'Mascot starts with vowel', 'School name has 2+ words'] },
+  { rows: ['Big Ten', 'Big 12', 'Mountain West'], cols: ['Located in mountain time zone', 'Mascot is a bird', 'Has played in a Rose Bowl'] }
+];
+function todayKey() { const d = new Date(); return `${d.getFullYear()}-${d.getMonth()+1}-${d.getDate()}`; }
+function pickDailyGridConfig() {
+  const seed = todayKey();
+  const sum = seed.split('').reduce((s,c) => s + c.charCodeAt(0), 0);
+  return GRID_CONFIGS[sum % GRID_CONFIGS.length];
+}
+function getGridState() {
+  const all = ls_get(STORE.grid, {});
+  return all[todayKey()] || { picks: {}, lockedTeams: [] };
+}
+function saveGridState(s) {
+  const all = ls_get(STORE.grid, {});
+  all[todayKey()] = s;
+  ls_set(STORE.grid, all);
+}
+function renderDailyGrid() {
+  const wrap = document.getElementById('dailyGridWrap');
+  document.getElementById('gridDate').textContent = new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'short', day: 'numeric' });
+  const cfg = pickDailyGridConfig();
+  const gs = getGridState();
+  wrap.innerHTML = `<div class="daily-grid-wrap">
+    <div style="text-align:center;margin-bottom:18px">
+      <div style="font-family:var(--mono);font-size:11px;color:var(--text-3);letter-spacing:1.5px">${Object.keys(gs.picks).length} / 9 cells filled</div>
+    </div>
+    <div class="daily-grid">
+      <div class="corner"></div>
+      ${cfg.cols.map(c => `<div class="col-h">${escapeHtml(c)}</div>`).join('')}
+      ${cfg.rows.map((row, ri) => `
+        <div class="row-h">${escapeHtml(row)}</div>
+        ${cfg.cols.map((col, ci) => {
+          const key = `${ri}-${ci}`;
+          const filled = gs.picks[key];
+          return `<div class="cell ${filled ? 'filled' : ''}" onclick="fillGridCell(${ri},${ci})">
+            ${filled ? `<span class="name">${escapeHtml(filled)}</span>` : `<span class="plus">+</span>`}
+          </div>`;
+        }).join('')}
+      `).join('')}
+    </div>
+    <p class="muted" style="margin-top:18px;text-align:center;font-size:12px;line-height:1.5">Tap any cell to type a team that satisfies <strong style="color:var(--text-2)">both</strong> the row conference and column criterion. No team can be used twice. New grid each day.</p>
+    <div style="text-align:center;margin-top:14px">
+      <button class="btn ghost sm" onclick="resetDailyGrid()">RESET TODAY'S GRID</button>
+    </div>
+  </div>`;
+}
+window.fillGridCell = function(ri, ci) {
+  const ans = prompt('Type a team that fits this cell (e.g., "Ohio State", "Alabama"):');
+  if (!ans) return;
+  const gs = getGridState();
+  const key = `${ri}-${ci}`;
+  const teamMatch = state.teams.find(t =>
+    (t.fullName || '').toLowerCase().includes(ans.toLowerCase()) ||
+    (t.name || '').toLowerCase() === ans.toLowerCase()
+  );
+  if (!teamMatch) { alert('Team not found in our database. Try the school name like "Ohio State".'); return; }
+  if (gs.lockedTeams.includes(teamMatch.id)) { alert('That team is already used in another cell.'); return; }
+  gs.picks[key] = teamMatch.fullName || teamMatch.name;
+  gs.lockedTeams.push(teamMatch.id);
+  saveGridState(gs);
+  renderDailyGrid();
+};
+window.resetDailyGrid = function() {
+  if (!confirm("Reset today's grid? Your progress will be lost.")) return;
+  const all = ls_get(STORE.grid, {});
+  delete all[todayKey()];
+  ls_set(STORE.grid, all);
+  renderDailyGrid();
+};
+
+/* ============================================================
+   CUSTOM QUIZ BUILDER
+   ============================================================ */
+function renderCustomBuilder() {
+  const wrap = document.getElementById('customWrap');
+  const saved = ls_get(STORE.custom, []);
+  wrap.innerHTML = `<div style="display:grid;grid-template-columns:1fr 1fr;gap:20px">
+    <div class="quiz-stage" style="min-height:auto">
+      <h3 style="margin-top:0;font-family:var(--display);letter-spacing:1.5px">BUILD A QUESTION</h3>
+      <div class="field" style="margin-bottom:10px">
+        <span class="lbl">Question</span>
+        <input class="input" id="cbQ" placeholder='e.g., Who beat Alabama in the 2007 Iron Bowl?' />
+      </div>
+      <div class="field" style="margin-bottom:10px">
+        <span class="lbl">Correct answer</span>
+        <input class="input" id="cbA" placeholder='e.g., Auburn' />
+      </div>
+      <div class="field" style="margin-bottom:10px">
+        <span class="lbl">Wrong answers (comma-separated)</span>
+        <input class="input" id="cbW" placeholder='Tennessee, LSU, Georgia' />
+      </div>
+      <button class="btn" onclick="addCustomQ()">+ ADD QUESTION</button>
+    </div>
+    <div class="quiz-stage" style="min-height:auto">
+      <h3 style="margin-top:0;font-family:var(--display);letter-spacing:1.5px">YOUR QUIZ (${saved.length})</h3>
+      ${saved.length ? saved.map((q,i) => `<div style="padding:10px 0;border-bottom:1px dashed var(--border)">
+        <div style="font-family:var(--display);letter-spacing:1px">${escapeHtml(q.q)}</div>
+        <div class="muted" style="font-size:12px;margin-top:4px">✓ ${escapeHtml(q.a)} <span style="color:var(--text-3)">| wrong: ${q.w.map(escapeHtml).join(', ')}</span></div>
+        <button class="btn ghost sm" style="margin-top:6px" onclick="delCustomQ(${i})">DELETE</button>
+      </div>`).join('') : '<div class="muted" style="font-size:13px">No questions yet. Build one on the left.</div>'}
+      ${saved.length >= 3 ? `<button class="btn lg" style="margin-top:14px" onclick="playCustom()">▶ PLAY YOUR QUIZ (${saved.length} Q)</button>` : ''}
+      <button class="btn ghost sm" style="margin-top:10px" onclick="exportCustom()">EXPORT JSON</button>
+      <button class="btn ghost sm" onclick="importCustom()">IMPORT JSON</button>
+      ${saved.length ? `<button class="btn ghost sm" onclick="clearCustom()">CLEAR ALL</button>` : ''}
+    </div>
+  </div>`;
+}
+window.addCustomQ = function() {
+  const q = document.getElementById('cbQ').value.trim();
+  const a = document.getElementById('cbA').value.trim();
+  const w = document.getElementById('cbW').value.split(',').map(s => s.trim()).filter(Boolean);
+  if (!q || !a || w.length < 1) { alert('Need a question, an answer, and at least 1 wrong choice.'); return; }
+  const saved = ls_get(STORE.custom, []);
+  saved.push({ q, a, w });
+  ls_set(STORE.custom, saved);
+  renderCustomBuilder();
+};
+window.delCustomQ = function(i) {
+  const saved = ls_get(STORE.custom, []);
+  saved.splice(i, 1);
+  ls_set(STORE.custom, saved);
+  renderCustomBuilder();
+};
+window.clearCustom = function() {
+  if (!confirm('Delete ALL your custom questions?')) return;
+  ls_set(STORE.custom, []);
+  renderCustomBuilder();
+};
+window.exportCustom = function() {
+  const saved = ls_get(STORE.custom, []);
+  const blob = new Blob([JSON.stringify(saved, null, 2)], { type: 'application/json' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = `gridiron-quiz-${todayKey()}.json`;
+  a.click();
+  URL.revokeObjectURL(a.href);
+};
+window.importCustom = function() {
+  const inp = document.createElement('input');
+  inp.type = 'file'; inp.accept = '.json';
+  inp.onchange = e => {
+    const f = e.target.files[0]; if (!f) return;
+    const reader = new FileReader();
+    reader.onload = () => {
+      try {
+        const data = JSON.parse(reader.result);
+        if (!Array.isArray(data)) throw 'bad';
+        const saved = ls_get(STORE.custom, []);
+        ls_set(STORE.custom, saved.concat(data));
+        renderCustomBuilder();
+      } catch(e) { alert('Invalid JSON file.'); }
+    };
+    reader.readAsText(f);
+  };
+  inp.click();
+};
+window.playCustom = function() {
+  const saved = ls_get(STORE.custom, []);
+  if (saved.length < 3) return;
+  state.current = { mode: 'custom', questions: saved.slice(), len: saved.length, idx: 0, correct: 0, answers: [] };
+  renderCustomQ();
+};
+function renderCustomQ() {
+  const c = state.current;
+  const q = c.questions[c.idx];
+  const choices = shuffle([q.a, ...q.w].slice(0, 4));
+  c.choices = choices;
+  c.currentQ = q;
+  const wrap = document.getElementById('customWrap');
+  wrap.innerHTML = `<div class="quiz-stage">
+    <div class="quiz-progress">
+      <span>QUESTION <strong style="color:var(--text)">${c.idx + 1}</strong> / ${c.len}</span>
+      <span>SCORE: <strong style="color:var(--scarlet-hot)">${c.correct}</strong></span>
+    </div>
+    <div class="progress-bar"><div class="fill" style="width:${(c.idx / c.len) * 100}%"></div></div>
+    <h3 class="q-prompt" style="margin-top:30px">${escapeHtml(q.q)}</h3>
+    <div class="choices">
+      ${choices.map((ch, i) => `<button class="choice" onclick="answerCustom(${i})">
+        <span class="letter">${String.fromCharCode(65+i)}</span>${escapeHtml(ch)}
+      </button>`).join('')}
+    </div>
+    <div class="q-feedback" id="qf"></div>
+  </div>`;
+}
+window.answerCustom = function(i) {
+  const c = state.current;
+  const correct = c.choices[i] === c.currentQ.a;
+  c.answers.push({ team: { fullName: c.currentQ.q }, correct });
+  if (correct) c.correct++;
+  document.querySelectorAll('.choice').forEach((el, idx) => {
+    el.disabled = true;
+    if (c.choices[idx] === c.currentQ.a) el.classList.add('correct');
+    else if (idx === i) el.classList.add('wrong');
+  });
+  const fb = document.getElementById('qf');
+  fb.classList.add('active', correct ? 'win' : 'lose');
+  fb.innerHTML = `${correct ? '✓ CORRECT' : '✗ WRONG'} <span class="answer">${escapeHtml(c.currentQ.a)}</span>`;
+  setTimeout(() => {
+    c.idx++;
+    if (c.idx >= c.len) {
+      bumpScore('custom', c.correct, c.len);
+      const pct = Math.round(c.correct / c.len * 100);
+      const wrap = document.getElementById('customWrap');
+      wrap.innerHTML = `<div class="quiz-stage"><div class="result">
+        <div class="muted" style="font-family:var(--mono);font-size:11px;letter-spacing:1.5px">YOUR QUIZ · COMPLETE</div>
+        <div class="score"><span class="accent">${c.correct}</span><span style="color:var(--text-3)">/</span>${c.len}</div>
+        <div class="pct">${pct}%</div>
+        <div class="q-actions">
+          <button class="btn lg" onclick="playCustom()">PLAY AGAIN</button>
+          <button class="btn ghost lg" onclick="renderCustomBuilder()">BUILDER</button>
+        </div>
+      </div></div>`;
+    } else renderCustomQ();
+  }, 1100);
+};
+
+/* ============================================================
+   OHIO STATE SPOTLIGHT — rich hand-curated content
+   ============================================================ */
+const OSU_DATA = {
+  founded: '1890',
+  university: '1870',
+  city: 'Columbus, Ohio',
+  conf: 'Big Ten',
+  colors: 'Scarlet & Gray',
+  mascot: 'Brutus Buckeye',
+  stadium: 'Ohio Stadium · "The Horseshoe"',
+  capacity: '102,780',
+  bandName: 'TBDBITL — The Best Damn Band In The Land',
+  nicknameOrigin: 'Buckeye is the Ohio state tree (Aesculus glabra). The leather-brown nut with a pale "eye" was carried as a good luck charm by Ohio settlers.',
+  natlTitles: [
+    {year: 1942, coach: 'Paul Brown'},
+    {year: 1954, coach: 'Woody Hayes'},
+    {year: 1957, coach: 'Woody Hayes'},
+    {year: 1961, coach: 'Woody Hayes'},
+    {year: 1968, coach: 'Woody Hayes'},
+    {year: 1970, coach: 'Woody Hayes'},
+    {year: 2002, coach: 'Jim Tressel'},
+    {year: 2014, coach: 'Urban Meyer'},
+    {year: 2024, coach: 'Ryan Day'}
+  ],
+  heismans: [
+    {year: 1944, name: 'Les Horvath', pos: 'HB/QB'},
+    {year: 1950, name: 'Vic Janowicz', pos: 'HB'},
+    {year: 1955, name: 'Howard "Hopalong" Cassady', pos: 'HB'},
+    {year: 1974, name: 'Archie Griffin', pos: 'HB'},
+    {year: 1975, name: 'Archie Griffin', pos: 'HB · only 2-time Heisman winner ever'},
+    {year: 1995, name: 'Eddie George', pos: 'RB'},
+    {year: 2006, name: 'Troy Smith', pos: 'QB'}
+  ],
+  coaches: [
+    {name: 'Woody Hayes', years: '1951–1978', record: '205–61–10', titles: '5 NC · 13 Big Ten'},
+    {name: 'Earle Bruce', years: '1979–1987', record: '81–26–1', titles: '4 Big Ten'},
+    {name: 'John Cooper', years: '1988–2000', record: '111–43–4', titles: '3 Big Ten · 2–10–1 vs Michigan'},
+    {name: 'Jim Tressel', years: '2001–2010', record: '94–22', titles: '2002 NC · 9–1 vs Michigan'},
+    {name: 'Urban Meyer', years: '2012–2018', record: '83–9', titles: '2014 NC · 7–0 vs Michigan'},
+    {name: 'Ryan Day', years: '2019–present', record: '70+ wins', titles: '2024 NC'}
+  ],
+  greats: [
+    'Archie Griffin · only 2× Heisman winner in history',
+    'Eddie George · 1995 Heisman, NFL Pro Bowler',
+    'Orlando Pace · LT, "pancake king", NFL HOF',
+    'Cris Carter · WR, NFL HOF',
+    'Jim Parker · OL/DT, NFL HOF',
+    'Joey Bosa & Nick Bosa · DE brothers, both NFL stars',
+    'Chase Young · 2019 Heisman finalist, #2 NFL pick',
+    'Ezekiel Elliott · RB, NFL Pro Bowler',
+    'Justin Fields · QB, NFL starter',
+    'CJ Stroud · QB, #2 NFL pick, NFL ROY',
+    'Marvin Harrison Jr. · WR, #4 NFL pick',
+    'Garrett Wilson · WR, NFL ROY',
+    'AJ Hawk, James Laurinaitis, Chris Spielman · LBs',
+    'Pete Johnson, Keith Byars, Robert Smith · RBs'
+  ],
+  traditions: [
+    {name: 'Script Ohio', desc: 'The marching band\'s signature formation, dating to October 24, 1936. The sousaphone player who "dots the i" has the most coveted role in college marching band.'},
+    {name: 'Skull Session', desc: 'TBDBITL pep rally inside St. John Arena two hours before kickoff. The team walks through on its way to the Shoe.'},
+    {name: 'Senior Tackle', desc: 'Last home practice of senior year. Each senior delivers one final tackle on a blocking dummy.'},
+    {name: 'Buckeye Grove', desc: 'Every football All-American gets a buckeye tree planted on the southwest corner of the stadium with a plaque.'},
+    {name: 'Tunnel of Pride', desc: 'During Michigan home games, all living former All-Americans line the tunnel as the team takes the field.'},
+    {name: 'Captain\'s Breakfast', desc: 'A private end-of-season breakfast where the head coach formally announces team captains.'},
+    {name: 'Hang On Sloopy', desc: 'Adopted in 1965, the McCoys hit became the official rock song of Ohio in 1985. The band plays it after every Buckeye TD; fans spell O-H-I-O with their arms.'},
+    {name: 'Mirror Lake Jump', desc: 'Thursday before Michigan, students used to leap into the freezing campus lake. Officially ended ~2018 over safety, but the legend lives on.'}
+  ],
+  songs: [
+    {title: 'Carmen Ohio', role: 'Alma mater · oldest school song · sung after every game by team and crowd'},
+    {title: 'Buckeye Battle Cry', role: 'Primary fight song · written 1919'},
+    {title: 'Across the Field', role: 'Secondary fight song · 1915'},
+    {title: 'Hang On Sloopy', role: 'Unofficial state rock anthem · played after every TD'}
+  ],
+  trivia: [
+    {q: 'Where does the nickname "Buckeyes" come from?', a: 'The buckeye tree (Aesculus glabra) is the official state tree of Ohio. Pioneers carried the nut as a good-luck charm.'},
+    {q: 'What is Ohio Stadium\'s nickname?', a: 'The Horseshoe — or simply "The Shoe" — for its open-ended horseshoe shape. Capacity: 102,780.'},
+    {q: 'Who is the only 2-time Heisman Trophy winner in college football history?', a: 'Archie Griffin, who won in 1974 and 1975 as a Buckeye running back.'},
+    {q: 'What does TBDBITL stand for?', a: 'The Best Damn Band In The Land — Ohio State\'s marching band.'},
+    {q: 'When did the band first form Script Ohio?', a: 'October 24, 1936, against Pittsburgh. The "i-dotter" tradition started a year later.'},
+    {q: 'Who coached the Buckeyes to their 2024 national title?', a: 'Ryan Day, defeating Notre Dame 34–23 in the inaugural 12-team College Football Playoff final.'},
+    {q: 'Which Buckeye head coach went undefeated against Michigan?', a: 'Urban Meyer (7–0) — the only OSU head coach with multiple seasons to never lose to TTUN.'},
+    {q: 'Who are the famous Buckeye brothers in the NFL?', a: 'Joey and Nick Bosa — both All-American defensive ends at OSU and NFL Pro Bowlers.'},
+    {q: 'What jingle does the band play after every Buckeye touchdown?', a: '"Hang On Sloopy" by the McCoys, with the crowd spelling O-H-I-O.'},
+    {q: 'Who scored the most famous TD in OSU vs. Miami 2002 NC game?', a: 'Cie Grant\'s sack/INT and Maurice Clarett\'s strip-and-recover were the iconic plays — Clarett scored the go-ahead TD.'}
+  ]
+};
+
+function renderOSUSpotlight() {
+  const wrap = document.getElementById('osuWrap');
+  const d = OSU_DATA;
+  wrap.innerHTML = `
+  <div class="spotlight-hero">
+    <h1>THE OHIO STATE<span>BUCKEYES</span></h1>
+    <div class="meta">${d.city} · ${d.conf} · ${d.colors} · Est. ${d.founded}</div>
+    <div class="stats-row">
+      <div class="stat"><div class="lbl">National Titles</div><div class="val">${d.natlTitles.length}</div></div>
+      <div class="stat"><div class="lbl">Heismans</div><div class="val">7</div></div>
+      <div class="stat"><div class="lbl">All-Time Wins</div><div class="val">960+</div></div>
+      <div class="stat"><div class="lbl">The Shoe</div><div class="val">102K</div></div>
+      <div class="stat"><div class="lbl">Most Recent NC</div><div class="val">2024</div></div>
+    </div>
+  </div>
+
+  <div class="spotlight-grid">
+
+    <div class="fact-card">
+      <h3>Program At A Glance</h3>
+      <ul>
+        <li><strong>Founded:</strong> ${d.founded} (program); ${d.university} (university)</li>
+        <li><strong>Stadium:</strong> ${d.stadium}, capacity ${d.capacity}, opened 1922</li>
+        <li><strong>Mascot:</strong> ${d.mascot}</li>
+        <li><strong>Marching Band:</strong> ${d.bandName}</li>
+        <li><strong>Why "Buckeyes"?</strong> ${d.nicknameOrigin}</li>
+      </ul>
+    </div>
+
+    <div class="fact-card">
+      <h3>National Championships (${d.natlTitles.length})</h3>
+      <ul>
+        ${d.natlTitles.map(t => `<li><strong>${t.year}</strong> · ${escapeHtml(t.coach)}</li>`).join('')}
+      </ul>
+    </div>
+
+    <div class="fact-card">
+      <h3>Heisman Winners (7)</h3>
+      <ul>
+        ${d.heismans.map(h => `<li><strong>${h.year}</strong> · ${escapeHtml(h.name)} <span class="muted">(${escapeHtml(h.pos)})</span></li>`).join('')}
+      </ul>
+    </div>
+
+    <div class="fact-card">
+      <h3>Head Coaches (Modern Era)</h3>
+      <ul>
+        ${d.coaches.map(c => `<li><strong>${escapeHtml(c.name)}</strong> · ${escapeHtml(c.years)} · ${escapeHtml(c.record)} <span class="muted">· ${escapeHtml(c.titles)}</span></li>`).join('')}
+      </ul>
+    </div>
+
+    <div class="fact-card full">
+      <h3>All-Time Greats</h3>
+      <ul style="columns:2;column-gap:24px">
+        ${d.greats.map(g => `<li>${escapeHtml(g)}</li>`).join('')}
+      </ul>
+    </div>
+
+    <div class="fact-card full">
+      <h3>Traditions</h3>
+      <ul>
+        ${d.traditions.map(t => `<li><strong>${escapeHtml(t.name)}</strong> — ${escapeHtml(t.desc)}</li>`).join('')}
+      </ul>
+    </div>
+
+    <div class="fact-card">
+      <h3>The Songbook</h3>
+      <ul>
+        ${d.songs.map(s => `<li><strong>${escapeHtml(s.title)}</strong> — ${escapeHtml(s.role)}</li>`).join('')}
+      </ul>
+    </div>
+
+    <div class="fact-card">
+      <h3>Series · Big Ten Era</h3>
+      <ul>
+        <li><strong>Joined Big Ten:</strong> 1913</li>
+        <li><strong>Big Ten titles:</strong> 41+ (most in conference history)</li>
+        <li><strong>vs Michigan since 2000:</strong> Ohio State <strong style="color:var(--scarlet-hot)">17–8</strong> · the era we own</li>
+        <li><strong>Tressel + Meyer combined vs TTUN:</strong> <strong style="color:var(--scarlet-hot)">16–1</strong></li>
+        <li><strong>NCs since 2000:</strong> OSU 3 · Michigan 1</li>
+        <li><strong>Bowl appearances:</strong> 50+</li>
+      </ul>
+    </div>
+
+    <div class="fact-card full">
+      <h3>Quick-Hit Trivia</h3>
+      <ol class="qmark-list">
+        ${d.trivia.map((t,i) => `<li>
+          <span class="q">Q${i+1}</span>
+          <span class="a"><strong>${escapeHtml(t.q)}</strong><br>${escapeHtml(t.a)}</span>
+        </li>`).join('')}
+      </ol>
+    </div>
+
+  </div>
+
+  <div style="text-align:center;margin-top:24px">
+    <button class="btn lg" onclick="goTab('michigan')">→ NOW LET'S TALK ABOUT TTUN</button>
+  </div>
+  `;
+}
+
+/* ============================================================
+   BEAT MICHIGAN — rivalry tab (all in good fun)
+   ============================================================ */
+function daysUntilMichiganGame() {
+  // The Game is traditionally the last Saturday of November (rivalry week)
+  const now = new Date();
+  const yr = now.getFullYear();
+  // Approximate: last Saturday of November
+  let d = new Date(yr, 10, 30);
+  while (d.getDay() !== 6) d.setDate(d.getDate() - 1);
+  if (d < now) {
+    d = new Date(yr + 1, 10, 30);
+    while (d.getDay() !== 6) d.setDate(d.getDate() - 1);
+  }
+  const diff = d - now;
+  return {
+    days: Math.floor(diff / (1000*60*60*24)),
+    hours: Math.floor((diff / (1000*60*60)) % 24),
+    minutes: Math.floor((diff / (1000*60)) % 60),
+    when: d.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })
+  };
+}
+
+function renderMichiganTab() {
+  const wrap = document.getElementById('michiganWrap');
+  const cd = daysUntilMichiganGame();
+  wrap.innerHTML = `
+  <div class="michigan-mode">
+    <h1>BEAT <span class="strike">MICHIGAN</span></h1>
+    <div class="tagline">A.K.A. <span class="red">TTUN</span> · "That Team Up North" · As Woody preferred to call them. We agree.</div>
+
+    <div class="chant-banner">
+      <p class="chant">O-H! · I-O!</p>
+      <div class="sub">The greatest call &amp; response in college sports</div>
+    </div>
+
+    <div class="scoreboard">
+      <div class="team osu">
+        <div class="name">OHIO STATE</div>
+        <div class="wins">17</div>
+      </div>
+      <div class="vs">
+        SINCE 2000<br>
+        <span class="meta">PURE DOMINANCE</span>
+      </div>
+      <div class="team mich">
+        <div class="name">TTUN</div>
+        <div class="wins">8</div>
+      </div>
+    </div>
+
+    <div style="text-align:center;margin:20px 0 8px">
+      <div style="font-family:var(--mono);font-size:11px;color:var(--text-3);letter-spacing:1.5px">COUNTDOWN TO THE GAME</div>
+    </div>
+    <div class="countdown">
+      <div class="unit"><div class="n">${cd.days}</div><div class="l">Days</div></div>
+      <div class="unit"><div class="n">${cd.hours}</div><div class="l">Hours</div></div>
+      <div class="unit"><div class="n">${cd.minutes}</div><div class="l">Min</div></div>
+    </div>
+    <div style="text-align:center;font-family:var(--mono);font-size:10px;color:var(--text-3);letter-spacing:1px">~ EST. ${cd.when} ~</div>
+
+    <!-- TROPHY CASE: SIDE-BY-SIDE BRUTALITY -->
+    <div style="margin-top:30px;padding:22px;background:rgba(15,15,18,.85);border:1px solid var(--border);border-left:3px solid var(--scarlet);border-radius:6px">
+      <h3 style="font-family:var(--display);font-size:20px;letter-spacing:1.5px;margin:0 0 16px;color:var(--scarlet-hot);text-transform:uppercase">Trophy Case · Apples-to-Apples</h3>
+      <div style="display:grid;grid-template-columns:1fr 80px 1fr;gap:10px;align-items:center">
+        <div style="text-align:right;font-family:var(--display);font-size:14px;letter-spacing:1px;color:var(--scarlet-hot)">OHIO STATE</div>
+        <div></div>
+        <div style="font-family:var(--display);font-size:14px;letter-spacing:1px;color:var(--text-3)">TTUN</div>
+
+        <div style="text-align:right;font-family:var(--decal);font-size:32px;color:var(--scarlet-hot)">9</div>
+        <div style="text-align:center;font-family:var(--mono);font-size:10px;color:var(--text-3);letter-spacing:1.5px">NATIONAL<br>TITLES</div>
+        <div style="font-family:var(--decal);font-size:32px;color:var(--text-3);opacity:.5">11*</div>
+
+        <div style="text-align:right;font-family:var(--decal);font-size:32px;color:var(--scarlet-hot)">7</div>
+        <div style="text-align:center;font-family:var(--mono);font-size:10px;color:var(--text-3);letter-spacing:1.5px">HEISMAN<br>WINNERS</div>
+        <div style="font-family:var(--decal);font-size:32px;color:var(--text-3);opacity:.5">3</div>
+
+        <div style="text-align:right;font-family:var(--decal);font-size:32px;color:var(--scarlet-hot)">2024</div>
+        <div style="text-align:center;font-family:var(--mono);font-size:10px;color:var(--text-3);letter-spacing:1.5px">MOST<br>RECENT NC</div>
+        <div style="font-family:var(--decal);font-size:32px;color:var(--text-3);opacity:.5">2023</div>
+
+        <div style="text-align:right;font-family:var(--decal);font-size:32px;color:var(--scarlet-hot)">3</div>
+        <div style="text-align:center;font-family:var(--mono);font-size:10px;color:var(--text-3);letter-spacing:1.5px">NCs SINCE<br>2000</div>
+        <div style="font-family:var(--decal);font-size:32px;color:var(--text-3);opacity:.5">1</div>
+
+        <div style="text-align:right;font-family:var(--decal);font-size:32px;color:var(--scarlet-hot)">7-0</div>
+        <div style="text-align:center;font-family:var(--mono);font-size:10px;color:var(--text-3);letter-spacing:1.5px">URBAN MEYER<br>vs. MICHIGAN</div>
+        <div style="font-family:var(--decal);font-size:32px;color:var(--text-3);opacity:.5">0-7</div>
+      </div>
+      <p class="muted" style="font-size:11px;margin:14px 0 0;font-family:var(--mono);letter-spacing:1px">* Most of TTUN's titles were claimed before WWII. Their last title before 2023 came in 1997 — a 26-year drought.</p>
+    </div>
+
+    <div class="rivalry-grid" style="margin-top:30px">
+
+      <div class="rivalry-card">
+        <h3>The Game · Since 1897</h3>
+        <p>First played 1897. Annual since 1918. It's almost always the last regular-season game for both programs — and it's almost always for everything. <strong>"The Game"</strong> isn't a nickname. It's the only thing it could ever be called.</p>
+      </div>
+
+      <div class="rivalry-card">
+        <h3>Hayes Coached Bo. Hayes Beat Bo.</h3>
+        <p>Bo Schembechler was Woody Hayes' assistant coach at Ohio State for five years before taking the Michigan job in 1969. So when people talk about the "Ten-Year War," remember: <strong>Hayes finished 5–4–1 against his former pupil</strong>. Bo learned everything he knew in Columbus, then went up north and tried to use it against the master. The student never quite caught up.</p>
+      </div>
+
+      <div class="rivalry-card">
+        <h3>"That Team Up North"</h3>
+        <p>Woody Hayes refused to say the word "Michigan." He called them <em>"that team up north"</em> — TTUN, in modern shorthand. He pushed his car across the state line on recruiting trips so he wouldn't have to spend a single dime on Michigan gas.</p>
+        <span class="quote">"I don't want to give them a damn cent of my money."<span class="src">— Woody Hayes</span></span>
+      </div>
+
+      <div class="rivalry-card">
+        <h3>Tressel Era · OSU 9–1</h3>
+        <p>Jim Tressel introduced himself to Buckeye Nation at the 2001 basketball game by promising: <em>"You will be proud of our young people in the classroom, in the community, and most especially in 310 days, in Ann Arbor."</em> He then went <strong>9–1 against Michigan</strong> over the next decade. The one loss didn't even matter.</p>
+      </div>
+
+      <div class="rivalry-card">
+        <h3>Maurice Clarett · 2002</h3>
+        <p>True freshman Maurice Clarett delivered <strong>Ohio State 14, Michigan 9</strong> in Columbus, sending OSU to the BCS Championship and a 14–0 perfect season — beating Miami in double overtime for the natty. Clarett also strip-and-recovered against Sean Taylor in the title game. Legend.</p>
+      </div>
+
+      <div class="rivalry-card">
+        <h3>Urban Meyer · 7–0</h3>
+        <p>Seven seasons. Seven games. <strong>Seven Buckeye wins.</strong> Urban Meyer's record against Michigan is a perfect 7–0 — the only Ohio State coach with multiple seasons to never lose to TTUN. The 2018 game was a 62–39 obliteration in Columbus. They were ranked #4. They never recovered.</p>
+      </div>
+
+      <div class="rivalry-card">
+        <h3>2024 · We Got The Last Laugh</h3>
+        <p>Michigan won 13–10 in Columbus and tried to plant a flag at midfield. Cute. Then Ohio State steamrolled Tennessee, Oregon, Texas, and Notre Dame in the inaugural 12-team CFP — winning the <strong style="color:var(--scarlet-hot)">2024 National Championship</strong>. Michigan? 8–5. Lost the Citrus Bowl to Alabama. <em>Banner counts. Field-planting doesn't.</em></p>
+      </div>
+
+      <div class="rivalry-card">
+        <h3>The Drought That Defined Them</h3>
+        <p>Between 1997 and 2023, Michigan went <strong>26 years without a national title</strong>. In that span, Ohio State won two (2002, 2014) and made multiple title games. The 2023 title they finally got? Bracketed by allegations of in-person sign-stealing, NCAA investigations, and a head coach who immediately bolted for the NFL. Even their championship comes with an asterisk.</p>
+      </div>
+
+      <div class="rivalry-card">
+        <h3>NFL Pipeline · It's Not Close</h3>
+        <p>Ohio State leads the nation in NFL Draft picks over the past decade. <strong>Joey &amp; Nick Bosa, Chase Young, CJ Stroud, Marvin Harrison Jr., Garrett Wilson, Justin Fields, Ezekiel Elliott</strong> — first-rounders, household names. Michigan's recent first-rounders? You really have to think about it. We'll wait.</p>
+      </div>
+
+      <div class="rivalry-card">
+        <h3>The Skull Session vs. Michigan</h3>
+        <p>The Tunnel of Pride — every living Buckeye All-American lines the field. The Skull Session inside St. John Arena, 100% capacity, two hours before kickoff. Mirror Lake jump. <strong>"Beat Michigan"</strong> signs in every Columbus storefront from August through the third Saturday of November. It isn't a game. It's a 365-day way of life.</p>
+      </div>
+
+    </div>
+
+    <div class="chant-banner" style="margin-top:30px">
+      <p class="chant" style="font-size:28px;letter-spacing:3px">GO BUCKS · BEAT MICHIGAN</p>
+      <div class="sub">The signature sign-off of every Buckeye fan, year-round, regardless of season</div>
+    </div>
+
+    <div class="rivalry-card" style="margin-top:18px">
+      <h3>The Words That Live Forever</h3>
+      <span class="quote">"There's no excuse for losing to Michigan. None."<span class="src">— Woody Hayes</span></span>
+      <span class="quote">"Why did I go for two? Because I couldn't go for three."<span class="src">— Woody Hayes, on a 50–14 win over Michigan</span></span>
+      <span class="quote">"You will be proud of our young people in the classroom, in the community, and most especially in 310 days, in Ann Arbor."<span class="src">— Jim Tressel · Day 1 in Columbus, 2001</span></span>
+      <span class="quote">"I love the Buckeyes. I hate Michigan."<span class="src">— Pretty much every kid born in Ohio</span></span>
+    </div>
+
+  </div>
+
+  <div style="text-align:center;margin-top:24px">
+    <button class="btn lg" onclick="goTab('osu')">← BACK TO BUCKEYE HQ</button>
+  </div>
+  `;
+}
+
+/* ============================================================
+   INIT
+   ============================================================ */
+async function init() {
+  updateScoreUI();
+  await loadTeams();
+}
+init();
+</script>
+
+</body>
+</html>
